@@ -1,0 +1,8 @@
+dependencies:
+  - matplotlib
+  - numpy
+  - pandas
+  - r-base=4.3
+  - r-essentials
+  - r-bench
+  - r-microbenchmark
