@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr. Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2024-03-17">
+<meta name="dcterms.date" content="2024-03-31">
 
 <title>Course Introduction</title>
 <style>
@@ -3225,14 +3225,15 @@ window.Quarto = {
   <ul>
   <li><a href="#run-jupyter-notebook-in-binder" id="toc-run-jupyter-notebook-in-binder" class="nav-link" data-scroll-target="#run-jupyter-notebook-in-binder"><span class="header-section-number">6.1</span> Run Jupyter Notebook in Binder</a></li>
   <li><a href="#run-jupyter-notebook-locally-on-your-own-computer" id="toc-run-jupyter-notebook-locally-on-your-own-computer" class="nav-link" data-scroll-target="#run-jupyter-notebook-locally-on-your-own-computer"><span class="header-section-number">6.2</span> Run Jupyter Notebook locally on your own computer</a></li>
-  <li><a href="#run-quarto-markdown-locally-on-your-own-computer" id="toc-run-quarto-markdown-locally-on-your-own-computer" class="nav-link" data-scroll-target="#run-quarto-markdown-locally-on-your-own-computer"><span class="header-section-number">6.3</span> Run Quarto Markdown locally on your own computer</a></li>
+  <li><a href="#run-jupyter-notebook-in-vs-code-preferred" id="toc-run-jupyter-notebook-in-vs-code-preferred" class="nav-link" data-scroll-target="#run-jupyter-notebook-in-vs-code-preferred"><span class="header-section-number">6.3</span> Run Jupyter Notebook in VS Code (preferred)</a></li>
   </ul></li>
-  <li><a href="#in-class-dicussion" id="toc-in-class-dicussion" class="nav-link" data-scroll-target="#in-class-dicussion"><span class="header-section-number">7</span> In class dicussion</a>
+  <li><a href="#iclicker" id="toc-iclicker" class="nav-link" data-scroll-target="#iclicker"><span class="header-section-number">7</span> iClicker</a></li>
+  <li><a href="#in-class-dicussion" id="toc-in-class-dicussion" class="nav-link" data-scroll-target="#in-class-dicussion"><span class="header-section-number">8</span> In class dicussion</a>
   <ul>
-  <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment"><span class="header-section-number">7.1</span> Experiment</a></li>
-  <li><a href="#method-1" id="toc-method-1" class="nav-link" data-scroll-target="#method-1"><span class="header-section-number">7.2</span> Method 1</a></li>
-  <li><a href="#method-2" id="toc-method-2" class="nav-link" data-scroll-target="#method-2"><span class="header-section-number">7.3</span> Method 2</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.4</span> Conclusion</a></li>
+  <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment"><span class="header-section-number">8.1</span> Experiment</a></li>
+  <li><a href="#method-1" id="toc-method-1" class="nav-link" data-scroll-target="#method-1"><span class="header-section-number">8.2</span> Method 1</a></li>
+  <li><a href="#method-2" id="toc-method-2" class="nav-link" data-scroll-target="#method-2"><span class="header-section-number">8.3</span> Method 2</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8.4</span> Conclusion</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -3261,7 +3262,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 17, 2024</p>
+      <p class="date">March 31, 2024</p>
     </div>
   </div>
   
@@ -3274,7 +3275,7 @@ window.Quarto = {
 
 
 <p>System information (for reproducibility):</p>
-<div id="cell-2" class="cell" data-tags="[]" data-execution_count="14">
+<div id="cell-2" class="cell" data-tags="[]" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Julia Version 1.10.2
@@ -3287,14 +3288,14 @@ Platform Info:
   WORD_SIZE: 64
   LIBM: libopenlibm
   LLVM: libLLVM-15.0.7 (ORCJIT, apple-m1)
-Threads: 1 default, 0 interactive, 1 GC (on 8 virtual cores)
+Threads: 8 default, 0 interactive, 4 GC (on 8 virtual cores)
 Environment:
-  JULIA_NUM_THREADS = 
+  JULIA_NUM_THREADS = 8
   JULIA_EDITOR = code</code></pre>
 </div>
 </div>
 <p>Load packages:</p>
-<div id="cell-4" class="cell" data-tags="[]" data-execution_count="15">
+<div id="cell-4" class="cell" data-tags="[]" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">activate</span>(<span class="fu">pwd</span>())</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">instantiate</span>()</span>
@@ -3349,7 +3350,7 @@ Environment:
 <p>Examples: <span class="math inline">\((\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}\)</span>, <span class="math inline">\(\mathbf{y}^T \boldsymbol{\Sigma}^{-1} \mathbf{y}\)</span>, Newton-Raphson algorithm, …</p></li>
 <li><p>Master some basic strategies to solve <strong>big data</strong> problems.</p>
 <p>Examples: how Google solve the PageRank problem with <span class="math inline">\(10^{9}\)</span> webpages, linear regression with <span class="math inline">\(10^7\)</span> observations, etc.</p></li>
-<li><p>No afraid of <strong>optimizations</strong> and treat it as a technology. Be able to recognize some major optimization classes and choose the best solver(s) correspondingly.</p></li>
+<li><p>No afraid of <strong>optimizations</strong> and treat it as a technology. Be able to recognize some major optimization problem classes and choose the best solver(s) correspondingly.</p></li>
 <li><p>Be immune to the language fight.</p></li>
 </ol>
 </section>
@@ -3364,7 +3365,7 @@ Environment:
 </section>
 <section id="how-to-get-started" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="how-to-get-started"><span class="header-section-number">6</span> How to get started</h2>
-<p>All course materials are in GitHub repo <a href="https://github.com/ucla-biostat-257/2024spring" class="uri">https://github.com/ucla-biostat-257/2024spring</a>. Lecture notes are Jupyter Notebooks (<code>.ipynb</code> files) and Quarto Markdown (<code>.qmd</code> files) under the <code>slides</code> folder. It is a good idea to learn by running through the code examples. You can do this in several ways.</p>
+<p>All course materials are in GitHub repo <a href="https://github.com/ucla-biostat-257/2024spring" class="uri">https://github.com/ucla-biostat-257/2024spring</a>. Lecture notes are Jupyter Notebooks (<code>.ipynb</code> files) in the <code>slides</code> folder. It is a good idea to learn by running through the code examples. You can do this in several ways.</p>
 <section id="run-jupyter-notebook-in-binder" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="run-jupyter-notebook-in-binder"><span class="header-section-number">6.1</span> Run Jupyter Notebook in Binder</h3>
 <p>A quick and easy way to run the Jupyter Notebooks is Binder, a free service that allows us to run Jupyter Notebooks in cloud. Simply follow the Binder link at the <a href="https://ucla-biostat-257.github.io/2024spring/schedule/schedule.html">schedule</a> page.</p>
@@ -3373,7 +3374,7 @@ Environment:
 <section id="run-jupyter-notebook-locally-on-your-own-computer" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="run-jupyter-notebook-locally-on-your-own-computer"><span class="header-section-number">6.2</span> Run Jupyter Notebook locally on your own computer</h3>
 <ol type="1">
-<li><p>Download and install Julia v1.10.x from <a href="https://julialang.org/downloads/" class="uri">https://julialang.org/downloads/</a>.</p></li>
+<li><p>Install Julia v1.10.x following instructions at <a href="https://julialang.org/downloads/" class="uri">https://julialang.org/downloads/</a>.</p></li>
 <li><p>Install <code>IJulia</code> package. Open Julia REPL, type <code>]</code> to enter the package mode, then type</p></li>
 </ol>
 <div class="sourceCode" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>add IJulia</span>
@@ -3399,33 +3400,40 @@ Environment:
 <li>Course material is updated frequently. Remember to <code>git pull</code> to obtain the most recent material.</li>
 </ol>
 </section>
-<section id="run-quarto-markdown-locally-on-your-own-computer" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="run-quarto-markdown-locally-on-your-own-computer"><span class="header-section-number">6.3</span> Run Quarto Markdown locally on your own computer</h3>
+<section id="run-jupyter-notebook-in-vs-code-preferred" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="run-jupyter-notebook-in-vs-code-preferred"><span class="header-section-number">6.3</span> Run Jupyter Notebook in VS Code (preferred)</h3>
 <ol type="1">
-<li><p>Download and install Julia v1.10.x from <a href="https://julialang.org/downloads/" class="uri">https://julialang.org/downloads/</a>.</p></li>
-<li><p>Follow the <a href="https://quarto.org/docs/get-started/">instructions</a> to install Quarto.</p></li>
+<li><p>Install <a href="https://julialang.org/downloads/">Julia</a>, <a href="https://code.visualstudio.com/">VS Code</a>, and <a href="https://quarto.org/docs/get-started/">Quarto</a>.</p></li>
+<li><p>Open VS Code and install extensions: Julia, Jupyter, Quarto.</p></li>
 <li><p>Git clone the course material.<br>
 </p></li>
 </ol>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ucla-biostat-257/2024spring.git biostat-257-2024spring</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can change <code>biostat-257-2024spring</code> to any other directory name you prefer.</p>
 <ol start="4" type="1">
-<li><p>Double click the file <code>2024spring.Rproj</code> to open the project in RStudio.</p></li>
-<li><p>Navigate to the <code>slies</code> folder and run/render <code>qmd</code> files as you want.</p></li>
+<li>Open the local Git repo in VS Code.</li>
 </ol>
 </section>
 </section>
-<section id="in-class-dicussion" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="in-class-dicussion"><span class="header-section-number">7</span> In class dicussion</h2>
+<section id="iclicker" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="iclicker"><span class="header-section-number">7</span> iClicker</h2>
+<ul>
+<li><p>Occasionally I will use iClicker to collect real-time feedback during lectures and records attendance.</p></li>
+<li><p><a href="https://student.iclicker.com/#/login">Access the iClicker Student Web App</a> (Select University of California Los Angeles through the Campus Portal).</p></li>
+<li><p>Join class at <a href="https://join.iclicker.com/QXCE" class="uri">https://join.iclicker.com/QXCE</a>.</p></li>
+</ul>
+</section>
+<section id="in-class-dicussion" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="in-class-dicussion"><span class="header-section-number">8</span> In class dicussion</h2>
 <p>The logistic regression is typically estimated by the Fisher scoring algorithm, or iteratively reweighted least squares (IWLS), which iterates according to <span class="math display">\[
 \boldsymbol{\beta}^{(t)} = (\mathbf{X}^T \mathbf{W}^{(t)} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W}^{(t)} \mathbf{z}^{(t)},
 \]</span> where <span class="math inline">\(\mathbf{z}^{(t)}\)</span> are pseudo-responses and <span class="math inline">\(\mathbf{W}^{(t)} = \text{diag}(\mathbf{w}^{(t)})\)</span> is a diagonal matrix with nonnegative weights on the diagonal. Superscript <span class="math inline">\(t\)</span> is the iterate number.</p>
 <p>Question: How much speedup we can achieve, by careful consideration of flops and memory usage, over the following naive implementation?</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inv</span>(X<span class="op">&#39;</span> <span class="op">*</span> <span class="fu">diagm</span>(w) <span class="op">*</span> X) <span class="op">*</span> X<span class="op">&#39;</span> <span class="op">*</span> <span class="fu">diagm</span>(w) <span class="op">*</span> z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="experiment" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="experiment"><span class="header-section-number">7.1</span> Experiment</h3>
+<section id="experiment" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="experiment"><span class="header-section-number">8.1</span> Experiment</h3>
 <p>First generate some data.</p>
-<div id="cell-13" class="cell" data-tags="[]" data-execution_count="16">
+<div id="cell-15" class="cell" data-tags="[]" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>, <span class="bu">Random</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Random seed for reproducibility</span></span>
@@ -3440,10 +3448,10 @@ Environment:
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="fl">0.25</span> <span class="op">*</span> <span class="fu">rand</span>(n);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="method-1" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="method-1"><span class="header-section-number">7.2</span> Method 1</h3>
+<section id="method-1" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="method-1"><span class="header-section-number">8.2</span> Method 1</h3>
 <p>The following code literally translates the mathematical expression into code.</p>
-<div id="cell-15" class="cell" data-tags="[]" data-execution_count="17">
+<div id="cell-17" class="cell" data-tags="[]" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># method 1 </span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>res1 <span class="op">=</span> <span class="fu">inv</span>(X<span class="op">&#39;</span> <span class="op">*</span> <span class="fu">diagm</span>(w) <span class="op">*</span> X) <span class="op">*</span> X<span class="op">&#39;</span> <span class="op">*</span> <span class="fu">diagm</span>(w) <span class="op">*</span> z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -3470,51 +3478,50 @@ Environment:
   0.004261642427505596</code></pre>
 </div>
 </div>
-<div id="cell-16" class="cell" data-tags="[]" data-execution_count="18">
+<div id="cell-18" class="cell" data-tags="[]" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>bm1 <span class="op">=</span> <span class="pp">@benchmark</span> ((<span class="fu">inv</span>(<span class="op">$</span>X<span class="op">&#39;</span> <span class="op">*</span> <span class="fu">diagm</span>(<span class="op">$</span>w) <span class="op">*</span> <span class="op">$</span>X) <span class="op">*</span> <span class="op">$</span>X<span class="op">&#39;</span>) <span class="op">*</span> <span class="fu">diagm</span>(<span class="op">$</span>w)) <span class="op">*</span> <span class="op">$</span>z</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>bm1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre>BenchmarkTools.Trial: 53 samples with 1 evaluation.
- Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">83.971 ms</span> … <span class="ansi-magenta-fg">167.064 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>7.53% … 49.04%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">89.853 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>7.07%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">95.157 ms</span> ± <span class="ansi-green-fg"> 15.067 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>9.50% ±  7.82%
-  ▂   █▅<span class="ansi-blue-fg">▂</span>    <span class="ansi-green-fg"> </span>                                                  
-  █▁▁▅██<span class="ansi-blue-fg">█</span>▇▅▃▃<span class="ansi-green-fg">▁</span>▁▃▃▁▁▁▃▁▁▁▁▁▅▃▁▃▃▁▁▁▁▁▁▁▁▁▁▁▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃ ▁
-  84 ms<span class="ansi-bright-black-fg">           Histogram: frequency by time</span>          146 ms <span class="ansi-bold">&lt;</span>
+<pre>BenchmarkTools.Trial: 58 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">84.412 ms</span> … <span class="ansi-magenta-fg">116.062 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>3.45% … 29.23%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">86.329 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>6.62%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">87.164 ms</span> ± <span class="ansi-green-fg">  4.542 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>7.42% ±  3.64%
+      ▃▄<span class="ansi-blue-fg">█</span>  <span class="ansi-green-fg"> </span>                                                    
+  ▃▁▆███<span class="ansi-blue-fg">█</span>█▅<span class="ansi-green-fg">▃</span>▅▁▁▁▁▄▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃ ▁
+  84.4 ms<span class="ansi-bright-black-fg">         Histogram: frequency by time</span>          103 ms <span class="ansi-bold">&lt;</span>
  Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">393.12 MiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">18</span>.</pre>
 </div>
 </div>
 </div>
 <p>Several unwise choices of algorithms waste lots of flops. The memeory allocations, caused by intermediate results, also slow down the program because of the need for garbage collection. This is a common mistake a beginner programmer in a high-level language makes. For example, the following R code (same algorithm on the same data) shows similar allocation. R code is much slower than Julia possibly because of the outdated BLAS/LAPACK library being used.</p>
-<div id="cell-18" class="cell" data-tags="[]" data-execution_count="19">
+<div id="cell-20" class="cell" data-tags="[]" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RCall</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>R<span class="st">&quot;&quot;&quot;</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">library(bench)</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">library(tidyverse)</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st"># Interpolate Julia variables into R workspace</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">X &lt;- </span><span class="sc">$</span>X</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">w &lt;- </span><span class="sc">$</span>w</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="st">z &lt;- </span><span class="sc">$</span>z</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="st">rbm &lt;- bench::mark(</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="st">  solve(t(X) %*% diag(w) %*% X) %*% t(X) %*% diag(w) %*% z,</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="st">  iterations = 10</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="st">  ) %&gt;% </span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="st">  print(width = Inf)</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st"># Interpolate Julia variables into R workspace</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">X &lt;- </span><span class="sc">$</span>X</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">w &lt;- </span><span class="sc">$</span>w</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">z &lt;- </span><span class="sc">$</span>z</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="st">rbm1 &lt;- bench::mark(</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="st">  solve(t(X) %*% diag(w) %*% X) %*% t(X) %*% diag(w) %*% z,</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="st">  iterations = 10</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="st">  ) |&gt; </span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="st">  print(width = Inf)</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 x 13
   expression                                                    min   median
   &lt;bch:expr&gt;                                               &lt;bch:tm&gt; &lt;bch:tm&gt;
-1 solve(t(X) %*% diag(w) %*% X) %*% t(X) %*% diag(w) %*% z     1.9s    1.91s
+1 solve(t(X) %*% diag(w) %*% X) %*% t(X) %*% diag(w) %*% z     1.8s    1.81s
   `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time result         
       &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;   &lt;bch:tm&gt; &lt;list&gt;         
-1     0.524     401MB     1.05    10    20      19.1s &lt;dbl [100 x 1]&gt;
+1     0.548     401MB     1.10    10    20      18.3s &lt;dbl [100 x 1]&gt;
   memory              time            gc               
   &lt;list&gt;              &lt;list&gt;          &lt;list&gt;           
 1 &lt;Rprofmem [14 x 3]&gt; &lt;bench_tm [10]&gt; &lt;tibble [10 x 3]&gt;</code></pre>
@@ -3525,10 +3532,10 @@ Environment:
 </div>
 </div>
 </section>
-<section id="method-2" class="level3" data-number="7.3">
-<h3 data-number="7.3" class="anchored" data-anchor-id="method-2"><span class="header-section-number">7.3</span> Method 2</h3>
+<section id="method-2" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="method-2"><span class="header-section-number">8.3</span> Method 2</h3>
 <p>In the following code, we make smarter choice of algorithms (rearranging order of evaluation; utilizing data structures such as diagonal matrix, triangular matrix, and positive definite matrices) and get rid of memeory allocation by pre-allocating intermediate arrays.</p>
-<div id="cell-20" class="cell" data-tags="[]" data-execution_count="20">
+<div id="cell-22" class="cell" data-tags="[]" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># preallocation</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>XtWt <span class="op">=</span> <span class="fu">Matrix</span><span class="dt">{Float64}</span>(<span class="cn">undef</span>, p, n)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>XtX <span class="op">=</span> <span class="fu">Matrix</span><span class="dt">{Float64}</span>(<span class="cn">undef</span>, p, p)</span>
@@ -3574,18 +3581,18 @@ Environment:
   0.004261642427505556</code></pre>
 </div>
 </div>
-<div id="cell-21" class="cell" data-tags="[]" data-execution_count="21">
+<div id="cell-23" class="cell" data-tags="[]" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bm2 <span class="op">=</span> <span class="pp">@benchmark</span> <span class="fu">myfun</span>(<span class="op">$</span>X, <span class="op">$</span>z, <span class="op">$</span>w, <span class="op">$</span>XtWt, <span class="op">$</span>XtX, <span class="op">$</span>Xtz)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>bm2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre>BenchmarkTools.Trial: 4556 samples with 1 evaluation.
- Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">1.046 ms</span> … <span class="ansi-magenta-fg">  4.935 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">1.077 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">1.097 ms</span> ± <span class="ansi-green-fg">113.262 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
-       ▂▃▆█▇▆▄<span class="ansi-blue-fg">▁</span>       <span class="ansi-green-fg"> </span>                                        
-  ▁▂▂▅████████<span class="ansi-blue-fg">█</span>█▇▇▆▄▄▃<span class="ansi-green-fg">▃</span>▂▂▂▂▂▂▂▁▂▂▃▅▅▇█▆▅▅▄▃▂▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁ ▃
-  1.05 ms<span class="ansi-bright-black-fg">         Histogram: frequency by time</span>        1.19 ms <span class="ansi-bold">&lt;</span>
+<pre>BenchmarkTools.Trial: 4569 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">1.069 ms</span> … <span class="ansi-magenta-fg"> 6.625 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">1.083 ms              </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">1.090 ms</span> ± <span class="ansi-green-fg">99.765 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
+       ▃▅███▆▅▄<span class="ansi-blue-fg">▃</span>▃▂▁▁ <span class="ansi-green-fg"> </span>                                        
+  ▁▂▃▄█████████<span class="ansi-blue-fg">█</span>█████<span class="ansi-green-fg">▇</span>▆▆▆▆▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▁▂▁▂▁▂▁▁▁▁▁▁▁▁▁▁▁▁ ▃
+  1.07 ms<span class="ansi-bright-black-fg">        Histogram: frequency by time</span>        1.13 ms <span class="ansi-bold">&lt;</span>
  Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">0 bytes</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">0</span>.</pre>
 </div>
 </div>
@@ -3593,35 +3600,35 @@ Environment:
 <p>In R, a better implementation is</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(X <span class="sc">*</span> w) <span class="sc">%*%</span> X, <span class="fu">t</span>(X) <span class="sc">%*%</span> (z <span class="sc">*</span> w))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It’s much faster than the naive implementation. To achieve zero memory allocation, some low-level coding using C++ and RcppEigen is necessary.</p>
-<div id="cell-23" class="cell" data-tags="[]" data-execution_count="22">
+<div id="cell-25" class="cell" data-tags="[]" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>R<span class="st">&quot;&quot;&quot;</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="st">bench::mark(</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="st">rbm2 &lt;- bench::mark(</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="st">  solve(t(X * w) %*% X, t(X) %*% (z * w)),</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="st">  ) %&gt;% </span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="st">  ) |&gt; </span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="st">  print(width = Inf)</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 x 13
   expression                                   min   median `itr/sec` mem_alloc
   &lt;bch:expr&gt;                              &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;
-1 solve(t(X * w) %*% X, t(X) %*% (z * w))   20.9ms   21.4ms      46.6    11.6MB
+1 solve(t(X * w) %*% X, t(X) %*% (z * w))   18.8ms   19.4ms      51.6    11.6MB
   `gc/sec` n_itr  n_gc total_time result          memory             
      &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;   &lt;bch:tm&gt; &lt;list&gt;          &lt;list&gt;             
-1     4.44    21     2      450ms &lt;dbl [100 x 1]&gt; &lt;Rprofmem [10 x 3]&gt;
+1     6.73    23     3      445ms &lt;dbl [100 x 1]&gt; &lt;Rprofmem [10 x 3]&gt;
   time            gc               
   &lt;list&gt;          &lt;list&gt;           
-1 &lt;bench_tm [23]&gt; &lt;tibble [23 x 3]&gt;</code></pre>
+1 &lt;bench_tm [26]&gt; &lt;tibble [26 x 3]&gt;</code></pre>
 </div>
 </div>
 </section>
-<section id="conclusion" class="level3" data-number="7.4">
-<h3 data-number="7.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.4</span> Conclusion</h3>
+<section id="conclusion" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8.4</span> Conclusion</h3>
 <p>By careful consideration of the computational algorithms, we achieve a whooping speedup (in Julia) of</p>
-<div id="cell-25" class="cell" data-tags="[]" data-execution_count="23">
+<div id="cell-27" class="cell" data-tags="[]" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># speed-up</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(bm1.times) <span class="op">/</span> <span class="fu">median</span>(bm2.times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>83.45799047950771</code></pre>
+<pre><code>79.6855507095881</code></pre>
 </div>
 </div>
 <p>For PhD students, that means, instead of waiting more than two months for your simulations to finish, you only need one day!</p>
