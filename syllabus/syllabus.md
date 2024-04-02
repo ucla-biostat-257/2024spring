@@ -73,7 +73,7 @@ There are no exams.
 
 ### Final Grade
 
-Grades will be based on homework (75%) and class participation (lecture/office hour attendance and questions) (25%).
+Grades will be based on homework (75%) and class participation (lecture/office hour questions, iClicker, CampusWire) (25%).
 
 ### UCLA ADA Policy 
 
