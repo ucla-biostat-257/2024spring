@@ -3227,20 +3227,14 @@ window.Quarto = {
   <li><a href="#run-jupyter-notebook-locally-on-your-own-computer" id="toc-run-jupyter-notebook-locally-on-your-own-computer" class="nav-link" data-scroll-target="#run-jupyter-notebook-locally-on-your-own-computer"><span class="header-section-number">6.2</span> Run Jupyter Notebook locally on your own computer</a></li>
   <li><a href="#run-jupyter-notebook-in-vs-code" id="toc-run-jupyter-notebook-in-vs-code" class="nav-link" data-scroll-target="#run-jupyter-notebook-in-vs-code"><span class="header-section-number">6.3</span> Run Jupyter Notebook in VS Code</a></li>
   </ul></li>
-  <li><a href="#iclicker" id="toc-iclicker" class="nav-link" data-scroll-target="#iclicker"><span class="header-section-number">7</span> iClicker</a>
+  <li><a href="#campuswire" id="toc-campuswire" class="nav-link" data-scroll-target="#campuswire"><span class="header-section-number">7</span> CampusWire</a></li>
+  <li><a href="#in-class-dicussion" id="toc-in-class-dicussion" class="nav-link" data-scroll-target="#in-class-dicussion"><span class="header-section-number">8</span> In class dicussion</a>
   <ul>
-  <li><a href="#poll-multiple-choice" id="toc-poll-multiple-choice" class="nav-link" data-scroll-target="#poll-multiple-choice"><span class="header-section-number">7.1</span> Poll: Multiple Choice</a></li>
-  <li><a href="#poll-multiple-choice-1" id="toc-poll-multiple-choice-1" class="nav-link" data-scroll-target="#poll-multiple-choice-1"><span class="header-section-number">7.2</span> Poll: Multiple Choice</a></li>
-  <li><a href="#poll-multiple-answer" id="toc-poll-multiple-answer" class="nav-link" data-scroll-target="#poll-multiple-answer"><span class="header-section-number">7.3</span> Poll: Multiple Answer</a></li>
-  </ul></li>
-  <li><a href="#campuswire" id="toc-campuswire" class="nav-link" data-scroll-target="#campuswire"><span class="header-section-number">8</span> CampusWire</a></li>
-  <li><a href="#in-class-dicussion" id="toc-in-class-dicussion" class="nav-link" data-scroll-target="#in-class-dicussion"><span class="header-section-number">9</span> In class dicussion</a>
-  <ul>
-  <li><a href="#poll-numeric" id="toc-poll-numeric" class="nav-link" data-scroll-target="#poll-numeric"><span class="header-section-number">9.1</span> Poll: Numeric</a></li>
-  <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment"><span class="header-section-number">9.2</span> Experiment</a></li>
-  <li><a href="#method-1" id="toc-method-1" class="nav-link" data-scroll-target="#method-1"><span class="header-section-number">9.3</span> Method 1</a></li>
-  <li><a href="#method-2" id="toc-method-2" class="nav-link" data-scroll-target="#method-2"><span class="header-section-number">9.4</span> Method 2</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">9.5</span> Conclusion</a></li>
+  <li><a href="#poll-numeric" id="toc-poll-numeric" class="nav-link" data-scroll-target="#poll-numeric"><span class="header-section-number">8.1</span> Poll: Numeric</a></li>
+  <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment"><span class="header-section-number">8.2</span> Experiment</a></li>
+  <li><a href="#method-1" id="toc-method-1" class="nav-link" data-scroll-target="#method-1"><span class="header-section-number">8.3</span> Method 1</a></li>
+  <li><a href="#method-2" id="toc-method-2" class="nav-link" data-scroll-target="#method-2"><span class="header-section-number">8.4</span> Method 2</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8.5</span> Conclusion</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -3282,7 +3276,7 @@ window.Quarto = {
 
 
 <p>System information (for reproducibility):</p>
-<div id="cell-2" class="cell" data-tags="[]" data-execution_count="2">
+<div id="cell-2" class="cell" data-tags="[]" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Julia Version 1.10.2
@@ -3302,7 +3296,7 @@ Environment:
 </div>
 </div>
 <p>Load packages:</p>
-<div id="cell-4" class="cell" data-tags="[]" data-execution_count="3">
+<div id="cell-4" class="cell" data-tags="[]" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">activate</span>(<span class="fu">pwd</span>())</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">instantiate</span>()</span>
@@ -3422,56 +3416,27 @@ Environment:
 </ol>
 </section>
 </section>
-<section id="iclicker" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="iclicker"><span class="header-section-number">7</span> iClicker</h2>
-<ul>
-<li><p>I will use iClicker to collect real-time feedback during lectures and record attendance.</p></li>
-<li><p><a href="https://student.iclicker.com/#/login">Access the iClicker Student Web App</a> (Select <strong>University of California Los Angeles</strong> through the Campus Portal).</p></li>
-<li><p>Join class at <a href="https://join.iclicker.com/QXCE" class="uri">https://join.iclicker.com/QXCE</a>.</p></li>
-</ul>
-<section id="poll-multiple-choice" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="poll-multiple-choice"><span class="header-section-number">7.1</span> Poll: Multiple Choice</h3>
-<p>Have you used iClicker before?<br>
-A. Yes<br>
-B. No</p>
-</section>
-<section id="poll-multiple-choice-1" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="poll-multiple-choice-1"><span class="header-section-number">7.2</span> Poll: Multiple Choice</h3>
-<p>Have you used Julia before?<br>
-A. Yes<br>
-B. No</p>
-</section>
-<section id="poll-multiple-answer" class="level3" data-number="7.3">
-<h3 data-number="7.3" class="anchored" data-anchor-id="poll-multiple-answer"><span class="header-section-number">7.3</span> Poll: Multiple Answer</h3>
-<p>Which integrated development environments (IDEs) have you used before?<br>
-A. JupyterLab<br>
-B. Jupyter Notebook<br>
-C. RStudio<br>
-D. Vi/Vim<br>
-E. VS Code</p>
-</section>
-</section>
-<section id="campuswire" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="campuswire"><span class="header-section-number">8</span> CampusWire</h2>
+<section id="campuswire" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="campuswire"><span class="header-section-number">7</span> CampusWire</h2>
 <ul>
 <li><p>We will use CampusWire as the discussion forum. Activities on CampusWire count towards participation (25% of grade).</p></li>
-<li><p>Join the class at <a href="https://campuswire.com/p/GCB5202CA" class="uri">https://campuswire.com/p/GCB5202CA</a>.</p></li>
+<li><p>Join the class at <a href="https://campuswire.com/p/GCB5202CA" class="uri">https://campuswire.com/p/GCB5202CA</a> using code <code>8794</code>.</p></li>
 </ul>
 </section>
-<section id="in-class-dicussion" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="in-class-dicussion"><span class="header-section-number">9</span> In class dicussion</h2>
+<section id="in-class-dicussion" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="in-class-dicussion"><span class="header-section-number">8</span> In class dicussion</h2>
 <p>The logistic regression is typically estimated by the Fisher scoring algorithm, or iteratively reweighted least squares (IWLS), which iterates according to <span class="math display">\[
 \boldsymbol{\beta}^{(t)} = (\mathbf{X}^T \mathbf{W}^{(t)} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W}^{(t)} \mathbf{z}^{(t)},
 \]</span> where <span class="math inline">\(\mathbf{z}^{(t)}\)</span> are pseudo-responses and <span class="math inline">\(\mathbf{W}^{(t)} = \text{diag}(\mathbf{w}^{(t)})\)</span> is a diagonal matrix with nonnegative weights on the diagonal. Superscript <span class="math inline">\(t\)</span> is the iterate number.</p>
-<section id="poll-numeric" class="level3" data-number="9.1">
-<h3 data-number="9.1" class="anchored" data-anchor-id="poll-numeric"><span class="header-section-number">9.1</span> Poll: Numeric</h3>
+<section id="poll-numeric" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="poll-numeric"><span class="header-section-number">8.1</span> Poll: Numeric</h3>
 <p>How much speedup can we achieve, by careful consideration of flops and memory usage, over the following naive implementation?</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inv</span>(X<span class="op">&#39;</span> <span class="op">*</span> <span class="fu">diagm</span>(w) <span class="op">*</span> X) <span class="op">*</span> X<span class="op">&#39;</span> <span class="op">*</span> <span class="fu">diagm</span>(w) <span class="op">*</span> z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="experiment" class="level3" data-number="9.2">
-<h3 data-number="9.2" class="anchored" data-anchor-id="experiment"><span class="header-section-number">9.2</span> Experiment</h3>
+<section id="experiment" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="experiment"><span class="header-section-number">8.2</span> Experiment</h3>
 <p>First generate some data.</p>
-<div id="cell-21" class="cell" data-tags="[]" data-execution_count="4">
+<div id="cell-17" class="cell" data-tags="[]" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>, <span class="bu">Random</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Random seed for reproducibility</span></span>
@@ -3486,10 +3451,10 @@ E. VS Code</p>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="fl">0.25</span> <span class="op">*</span> <span class="fu">rand</span>(n);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="method-1" class="level3" data-number="9.3">
-<h3 data-number="9.3" class="anchored" data-anchor-id="method-1"><span class="header-section-number">9.3</span> Method 1</h3>
+<section id="method-1" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="method-1"><span class="header-section-number">8.3</span> Method 1</h3>
 <p>The following code literally translates the mathematical expression into code.</p>
-<div id="cell-23" class="cell" data-tags="[]" data-execution_count="5">
+<div id="cell-19" class="cell" data-tags="[]" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># method 1 </span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>res1 <span class="op">=</span> <span class="fu">inv</span>(X<span class="op">&#39;</span> <span class="op">*</span> <span class="fu">diagm</span>(w) <span class="op">*</span> X) <span class="op">*</span> X<span class="op">&#39;</span> <span class="op">*</span> <span class="fu">diagm</span>(w) <span class="op">*</span> z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -3516,26 +3481,26 @@ E. VS Code</p>
   0.004261642427505596</code></pre>
 </div>
 </div>
-<div id="cell-24" class="cell" data-tags="[]" data-execution_count="6">
+<div id="cell-20" class="cell" data-tags="[]" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>bm1 <span class="op">=</span> <span class="pp">@benchmark</span> ((<span class="fu">inv</span>(<span class="op">$</span>X<span class="op">&#39;</span> <span class="op">*</span> <span class="fu">diagm</span>(<span class="op">$</span>w) <span class="op">*</span> <span class="op">$</span>X) <span class="op">*</span> <span class="op">$</span>X<span class="op">&#39;</span>) <span class="op">*</span> <span class="fu">diagm</span>(<span class="op">$</span>w)) <span class="op">*</span> <span class="op">$</span>z</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>bm1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre>BenchmarkTools.Trial: 54 samples with 1 evaluation.
- Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">90.540 ms</span> … <span class="ansi-magenta-fg">126.384 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>6.52% … 30.69%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">91.959 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>6.44%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">94.036 ms</span> ± <span class="ansi-green-fg">  6.945 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>7.29% ±  4.03%
-   ▇█<span class="ansi-blue-fg">▂</span>  <span class="ansi-green-fg"> </span>                                                       
-  ▇██<span class="ansi-blue-fg">█</span>█▄<span class="ansi-green-fg">▃</span>▄▁▁▁▁▁▁▁▄▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃ ▁
-  90.5 ms<span class="ansi-bright-black-fg">         Histogram: frequency by time</span>          123 ms <span class="ansi-bold">&lt;</span>
+<pre>BenchmarkTools.Trial: 55 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">87.979 ms</span> … <span class="ansi-magenta-fg">136.103 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>6.48% … 33.79%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">89.971 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>6.70%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">91.505 ms</span> ± <span class="ansi-green-fg">  7.764 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>7.83% ±  4.73%
+   ▃▇▅<span class="ansi-blue-fg">█</span>▇ <span class="ansi-green-fg"> </span>                                                      
+  ▇███<span class="ansi-blue-fg">█</span>█▃<span class="ansi-green-fg">▁</span>▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃ ▁
+  88 ms<span class="ansi-bright-black-fg">           Histogram: frequency by time</span>          119 ms <span class="ansi-bold">&lt;</span>
  Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">393.12 MiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">18</span>.</pre>
 </div>
 </div>
 </div>
 <p>Several unwise choices of algorithms waste lots of flops. The memeory allocations, caused by intermediate results, also slow down the program because of the need for garbage collection. This is a common mistake a beginner programmer in a high-level language makes. For example, the following R code (same algorithm on the same data) shows similar allocation. R code is much slower than Julia possibly because of the outdated BLAS/LAPACK library being used.</p>
-<div id="cell-26" class="cell" data-tags="[]" data-execution_count="7">
+<div id="cell-22" class="cell" data-tags="[]" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RCall</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>R<span class="st">&quot;&quot;&quot;</span></span>
@@ -3556,13 +3521,13 @@ E. VS Code</p>
 <pre><code># A tibble: 1 x 13
   expression                                                    min   median
   &lt;bch:expr&gt;                                               &lt;bch:tm&gt; &lt;bch:tm&gt;
-1 solve(t(X) %*% diag(w) %*% X) %*% t(X) %*% diag(w) %*% z    1.86s    1.87s
+1 solve(t(X) %*% diag(w) %*% X) %*% t(X) %*% diag(w) %*% z    1.83s    1.84s
   `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time result         
       &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;   &lt;bch:tm&gt; &lt;list&gt;         
-1     0.536     401MB     1.07    10    20      18.7s &lt;dbl [100 x 1]&gt;
+1     0.542     401MB     1.08    10    20      18.5s &lt;dbl [100 x 1]&gt;
   memory              time            gc               
   &lt;list&gt;              &lt;list&gt;          &lt;list&gt;           
-1 &lt;Rprofmem [54 x 3]&gt; &lt;bench_tm [10]&gt; &lt;tibble [10 x 3]&gt;</code></pre>
+1 &lt;Rprofmem [14 x 3]&gt; &lt;bench_tm [10]&gt; &lt;tibble [10 x 3]&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>┌ Warning: RCall.jl: Warning: Some expressions had a GC in every iteration; so filtering is disabled.
@@ -3570,10 +3535,10 @@ E. VS Code</p>
 </div>
 </div>
 </section>
-<section id="method-2" class="level3" data-number="9.4">
-<h3 data-number="9.4" class="anchored" data-anchor-id="method-2"><span class="header-section-number">9.4</span> Method 2</h3>
+<section id="method-2" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="method-2"><span class="header-section-number">8.4</span> Method 2</h3>
 <p>In the following code, we make smarter choice of algorithms (rearranging order of evaluation; utilizing data structures such as diagonal matrix, triangular matrix, and positive definite matrices) and get rid of memeory allocation by pre-allocating intermediate arrays.</p>
-<div id="cell-28" class="cell" data-tags="[]" data-execution_count="8">
+<div id="cell-24" class="cell" data-tags="[]" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># preallocation</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>XtWt <span class="op">=</span> <span class="fu">Matrix</span><span class="dt">{Float64}</span>(<span class="cn">undef</span>, p, n)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>XtX <span class="op">=</span> <span class="fu">Matrix</span><span class="dt">{Float64}</span>(<span class="cn">undef</span>, p, p)</span>
@@ -3619,18 +3584,18 @@ E. VS Code</p>
   0.004261642427505556</code></pre>
 </div>
 </div>
-<div id="cell-29" class="cell" data-tags="[]" data-execution_count="9">
+<div id="cell-25" class="cell" data-tags="[]" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bm2 <span class="op">=</span> <span class="pp">@benchmark</span> <span class="fu">myfun</span>(<span class="op">$</span>X, <span class="op">$</span>z, <span class="op">$</span>w, <span class="op">$</span>XtWt, <span class="op">$</span>XtX, <span class="op">$</span>Xtz)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>bm2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre>BenchmarkTools.Trial: 4352 samples with 1 evaluation.
- Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">1.101 ms</span> … <span class="ansi-magenta-fg">  8.963 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">1.125 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">1.144 ms</span> ± <span class="ansi-green-fg">185.488 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
-  ▂▄▇<span class="ansi-blue-fg">█</span>▆▄<span class="ansi-green-fg">▂</span>▂▁                                                   ▁
-  ███<span class="ansi-blue-fg">█</span>██<span class="ansi-green-fg">█</span>████▇▇▆▆▆▅▆▆▆▅▅▇▆▅▇▆▆▅▅▆▅▁▅▄▃▅▅▄▃▃▄▄▃▄▃▁▁▁▁▁▃▁▄▁▁▁▃▃ █
-  1.1 ms<span class="ansi-bright-black-fg">       </span><span class="ansi-bright-black-fg">Histogram: </span><span class="ansi-bright-black-fg ansi-bold">log(</span><span class="ansi-bright-black-fg">frequency</span><span class="ansi-bright-black-fg ansi-bold">)</span><span class="ansi-bright-black-fg"> by time</span>      1.51 ms <span class="ansi-bold">&lt;</span>
+<pre>BenchmarkTools.Trial: 4374 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">1.048 ms</span> … <span class="ansi-magenta-fg">  4.210 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">1.122 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">1.142 ms</span> ± <span class="ansi-green-fg">173.097 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
+  ▃▆▅▂█<span class="ansi-blue-fg">▅</span><span class="ansi-green-fg">▃</span>▁                                                    ▁
+  █████<span class="ansi-blue-fg">█</span><span class="ansi-green-fg">█</span>██▇▇▇▇▆▇▇▆▆▅▅▄▅▃▅▆▃▅▅▅▅▄▄▅▅▅▄▄▅▄▃▅▅▄▄▅▆▅▆▃▄▃▁▄▄▃▄▃▄▅ █
+  1.05 ms<span class="ansi-bright-black-fg">      </span><span class="ansi-bright-black-fg">Histogram: </span><span class="ansi-bright-black-fg ansi-bold">log(</span><span class="ansi-bright-black-fg">frequency</span><span class="ansi-bright-black-fg ansi-bold">)</span><span class="ansi-bright-black-fg"> by time</span>      2.01 ms <span class="ansi-bold">&lt;</span>
  Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">0 bytes</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">0</span>.</pre>
 </div>
 </div>
@@ -3638,7 +3603,7 @@ E. VS Code</p>
 <p>In R, a better implementation is</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(X <span class="sc">*</span> w) <span class="sc">%*%</span> X, <span class="fu">t</span>(X) <span class="sc">%*%</span> (z <span class="sc">*</span> w))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It’s much faster than the naive implementation. To achieve zero memory allocation, some low-level coding using C++ and RcppEigen is necessary.</p>
-<div id="cell-31" class="cell" data-tags="[]" data-execution_count="10">
+<div id="cell-27" class="cell" data-tags="[]" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>R<span class="st">&quot;&quot;&quot;</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="st">rbm2 &lt;- bench::mark(</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="st">  solve(t(X * w) %*% X, t(X) %*% (z * w)),</span></span>
@@ -3649,24 +3614,24 @@ E. VS Code</p>
 <pre><code># A tibble: 1 x 13
   expression                                   min   median `itr/sec` mem_alloc
   &lt;bch:expr&gt;                              &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;
-1 solve(t(X * w) %*% X, t(X) %*% (z * w))   20.6ms     21ms      47.6    11.6MB
+1 solve(t(X * w) %*% X, t(X) %*% (z * w))   20.4ms   20.7ms      47.2    11.6MB
   `gc/sec` n_itr  n_gc total_time result          memory             
      &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;   &lt;bch:tm&gt; &lt;list&gt;          &lt;list&gt;             
-1     4.33    22     2      462ms &lt;dbl [100 x 1]&gt; &lt;Rprofmem [10 x 3]&gt;
+1     4.29    22     2      466ms &lt;dbl [100 x 1]&gt; &lt;Rprofmem [11 x 3]&gt;
   time            gc               
   &lt;list&gt;          &lt;list&gt;           
 1 &lt;bench_tm [24]&gt; &lt;tibble [24 x 3]&gt;</code></pre>
 </div>
 </div>
 </section>
-<section id="conclusion" class="level3" data-number="9.5">
-<h3 data-number="9.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9.5</span> Conclusion</h3>
+<section id="conclusion" class="level3" data-number="8.5">
+<h3 data-number="8.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8.5</span> Conclusion</h3>
 <p>By careful consideration of the computational algorithms, we achieve a whooping speedup (in Julia) of</p>
-<div id="cell-33" class="cell" data-tags="[]" data-execution_count="11">
+<div id="cell-29" class="cell" data-tags="[]" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># speed-up</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(bm1.times) <span class="op">/</span> <span class="fu">median</span>(bm2.times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>81.74563386854825</code></pre>
+<pre><code>80.1701198485186</code></pre>
 </div>
 </div>
 <p>For PhD students, that means, instead of waiting more than two months for your simulations to finish, you only need one day!</p>

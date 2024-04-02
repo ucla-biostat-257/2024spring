@@ -41,7 +41,7 @@ This is a tentative list of topics:
 
 ### Prerequisite
 
-The prerequisite for this course is linear algebra (MATH 115A or [BIOSTAT 216](https://ucla-biostat-216.github.io/2022fall)) and linear models (STAT 100C or BIOSTAT 250A). Those wishing to enroll without these prerequisites will need to obtain consent from the instructor.  Homework will use the technical computing language [Julia](http://julialang.org).  
+The prerequisite for this course is linear algebra (MATH 115A or [BIOSTAT 216](https://ucla-biostat-216.github.io/2022fall/schedule/schedule.html)) and linear models (STAT 100C or BIOSTAT 250A). Those wishing to enroll without these prerequisites will need to obtain consent from the instructor.  Homework will use the technical computing language [Julia](http://julialang.org).  
 
 ### Course Webpage
 
@@ -73,7 +73,7 @@ There are no exams.
 
 ### Final Grade
 
-Grades will be based on homework (75%) and class participation (lecture/office hour questions, iClicker, CampusWire) (25%).
+Grades will be based on homework (75%) and class participation (lecture/office hour questions, CampusWire) (25%).
 
 ### UCLA ADA Policy 
 
