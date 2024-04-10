@@ -3259,7 +3259,7 @@ window.Quarto = {
 
 
 <p>System information (for reproducibility):</p>
-<div id="cell-2" class="cell" data-tags="[]" data-execution_count="14">
+<div id="cell-2" class="cell" data-tags="[]" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Julia Version 1.10.2
@@ -3279,7 +3279,7 @@ Environment:
 </div>
 </div>
 <p>Load packages:</p>
-<div id="cell-4" class="cell" data-execution_count="15">
+<div id="cell-4" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">activate</span>(<span class="fu">pwd</span>())</span>
@@ -3385,7 +3385,7 @@ Let <span class="math inline">\(n\)</span> be the problem size.</p>
 <ul>
 <li>For example, compare flops of the two mathematically equivalent expressions: <code>(A * B) * x</code> and <code>A * (B * x)</code> where <code>A</code> and <code>B</code> are matrices and <code>x</code> is a vector.</li>
 </ul>
-<div id="cell-7" class="cell" data-tags="[]" data-execution_count="16">
+<div id="cell-7" class="cell" data-tags="[]" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span>, <span class="bu">Random</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">257</span>) <span class="co"># seed</span></span>
@@ -3399,42 +3399,42 @@ Let <span class="math inline">\(n\)</span> be the problem size.</p>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>bm1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre>BenchmarkTools.Trial: 160 samples with 1 evaluation.
- Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">11.119 ms</span> … <span class="ansi-magenta-fg">73.057 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>19.61% … 0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">22.828 ms              </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span> 0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">31.474 ms</span> ± <span class="ansi-green-fg">17.528 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span> 1.01% ± 3.25%
-     ▃▃█▄  ▁  <span class="ansi-blue-fg"> </span>       <span class="ansi-green-fg"> </span>                                        
-  ▄▃█████▇▇█▄▅<span class="ansi-blue-fg">▆</span>▁▄▁▃▁▃▆<span class="ansi-green-fg">▁</span>▁▅▃▅▁▆▄▁▄▄▅▄▅▄▃▃▃▃▆▆▄▁▄▆▁▄▁▁▃▄▄▄▄▃▁▃▃▃ ▃
-  11.1 ms<span class="ansi-bright-black-fg">         Histogram: frequency by time</span>        70.9 ms <span class="ansi-bold">&lt;</span>
+<pre>BenchmarkTools.Trial: 623 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">6.729 ms</span> … <span class="ansi-magenta-fg">22.900 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 5.71%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">7.180 ms              </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">8.023 ms</span> ± <span class="ansi-green-fg"> 1.885 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>2.69% ± 5.50%
+  █▄▁<span class="ansi-blue-fg">▁</span>▁ ▁▃<span class="ansi-green-fg">▄</span>▁▂▁                                                
+  ███<span class="ansi-blue-fg">█</span>████<span class="ansi-green-fg">█</span>█████▅████▇▆▇▇▇▇▅▅▆▅▆▆▁▇▆▄▁▅▁▁▁▄▁▄▁▁▁▁▁▄▁▁▁▁▁▁▁▁▅ ▇
+  6.73 ms<span class="ansi-bright-black-fg">      </span><span class="ansi-bright-black-fg">Histogram: </span><span class="ansi-bright-black-fg ansi-bold">log(</span><span class="ansi-bright-black-fg">frequency</span><span class="ansi-bright-black-fg ansi-bold">)</span><span class="ansi-bright-black-fg"> by time</span>     16.3 ms <span class="ansi-bold">&lt;</span>
  Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">7.64 MiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">3</span>.</pre>
 </div>
 </div>
 </div>
-<div id="cell-8" class="cell" data-tags="[]" data-execution_count="17">
+<div id="cell-8" class="cell" data-tags="[]" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># complexity is n^2 + n^2 = O(n^2)</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>bm2 <span class="op">=</span> <span class="pp">@benchmark</span> <span class="op">$</span>A <span class="op">*</span> (<span class="op">$</span>B <span class="op">*</span> <span class="op">$</span>x)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>bm2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre>BenchmarkTools.Trial: 4370 samples with 1 evaluation.
- Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">220.917 μs</span> … <span class="ansi-magenta-fg">12.743 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">374.334 μs              </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">  1.141 ms</span> ± <span class="ansi-green-fg"> 2.184 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
-  █<span class="ansi-blue-fg">▆</span>▄▁  <span class="ansi-green-fg"> </span>                                                       
-  █<span class="ansi-blue-fg">█</span>███▇<span class="ansi-green-fg">▇</span>▆▆▅▆▆▇▆▅▅▅▅▅▅▆▆▅▅▆▆▅▅▅▅▄▅▅▆▅▅▆▅▅▄▅▄▅▅▇▆▆▆▄▆▆▅▇▅▆▆▆▇▅▆ █
-  221 μs<span class="ansi-bright-black-fg">        </span><span class="ansi-bright-black-fg">Histogram: </span><span class="ansi-bright-black-fg ansi-bold">log(</span><span class="ansi-bright-black-fg">frequency</span><span class="ansi-bright-black-fg ansi-bold">)</span><span class="ansi-bright-black-fg"> by time</span>      10.1 ms <span class="ansi-bold">&lt;</span>
+<pre>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">192.459 μs</span> … <span class="ansi-magenta-fg">  6.622 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">268.208 μs               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">316.864 μs</span> ± <span class="ansi-green-fg">198.394 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
+    █▂▃<span class="ansi-blue-fg"> </span> <span class="ansi-green-fg"> </span>                                                       
+  ▂▆███<span class="ansi-blue-fg">▆</span>▄<span class="ansi-green-fg">▄</span>▄▄▅▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▂▂▂▂▂ ▃
+  192 μs<span class="ansi-bright-black-fg">           Histogram: frequency by time</span>         1.22 ms <span class="ansi-bold">&lt;</span>
  Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">16.00 KiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">2</span>.</pre>
 </div>
 </div>
 </div>
-<div id="cell-9" class="cell" data-tags="[]" data-execution_count="18">
+<div id="cell-9" class="cell" data-tags="[]" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Speed up</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(bm1.times) <span class="op">/</span> <span class="fu">median</span>(bm2.times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>60.98344390763851</code></pre>
+<pre><code>26.77182261528366</code></pre>
 </div>
 </div>
-<div id="cell-10" class="cell" data-tags="[]" data-execution_count="19">
+<div id="cell-10" class="cell" data-tags="[]" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fortunately, Julia parsed the following code in the more efficient way</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># No luck with some other languages</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="pp">@code_lowered</span> A <span class="op">*</span> B <span class="op">*</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3455,7 +3455,7 @@ Let <span class="math inline">\(n\)</span> be the problem size.</p>
 <li><p><strong>FLOPS</strong> (floating point operations per second) is a measure of computer performance.</p></li>
 <li><p>For example, this laptop has the <a href="https://en.wikipedia.org/wiki/Apple_M2">Apple M2</a> Max CPU with 8 performance cores and 4 efficiency cores.</p></li>
 </ul>
-<div id="cell-12" class="cell" data-tags="[]" data-execution_count="20">
+<div id="cell-12" class="cell" data-tags="[]" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Julia Version 1.10.2
@@ -3480,19 +3480,19 @@ in double precision and
 $$ 4 \times 2.9 \times 10^9 \times 32 = 371.2 \text{ GFLOPS SP} $$
 in single precision.  -->
 <ul>
-<li>In Julia, <code>LinearAlgebra.peakflops</code> computes the peak flop rate of the computer by running <strong>double precision</strong> matrix-matrix multiplication <code>BLAS.gemm!</code>. About 385 GFLOPS DP.</li>
+<li>In Julia, <code>LinearAlgebra.peakflops</code> computes the peak flop rate of the computer by running <strong>double precision</strong> matrix-matrix multiplication <code>BLAS.gemm!</code>. About 350 GFLOPS DP.</li>
 </ul>
-<div id="cell-14" class="cell" data-tags="[]" data-execution_count="21">
+<div id="cell-14" class="cell" data-tags="[]" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Double-precison throughput</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">LinearAlgebra</span>.<span class="fu">peakflops</span>(<span class="fl">2</span><span class="op">^</span><span class="fl">14</span>) <span class="co"># matrix size 2^14</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>3.455647958720089e11</code></pre>
+<pre><code>3.473934944177336e11</code></pre>
 </div>
 </div>
-<p>We roughtly estimate the <strong>single precision</strong> thoughput by (# flops / runtime). About 733 GFLOPS SP.</p>
-<div id="cell-16" class="cell" data-tags="[]" data-execution_count="22">
+<p>We roughtly estimate the <strong>single precision</strong> thoughput by (# flops / runtime). About 700 GFLOPS SP.</p>
+<div id="cell-16" class="cell" data-tags="[]" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span>, <span class="bu">Random</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate matrix data</span></span>
@@ -3508,16 +3508,16 @@ in single precision.  -->
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
 <pre>BenchmarkTools.Trial: 1 sample with 1 evaluation.
- Single result which took <span class="ansi-blue-fg">14.913 s</span> (0.00% GC) to evaluate,
+ Single result which took <span class="ansi-blue-fg">12.772 s</span> (0.00% GC) to evaluate,
  with a memory estimate of <span class="ansi-yellow-fg">0 bytes</span>, over <span class="ansi-yellow-fg">0</span> allocations.</pre>
 </div>
 </div>
 </div>
-<div id="cell-17" class="cell" data-tags="[]" data-execution_count="23">
+<div id="cell-17" class="cell" data-tags="[]" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate single precision throughput by # flops / runtime</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>(<span class="fl">2</span>n<span class="op">^</span><span class="fl">3</span>) <span class="op">/</span> (<span class="fu">minimum</span>(bm.times) <span class="op">/</span> <span class="fl">1e9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>5.898382474012715e11</code></pre>
+<pre><code>6.886896498115964e11</code></pre>
 </div>
 </div>
 <p>In a later lecture, we’ll see graphical processing units (GPUs) offer a much larger thoughput in single precision.</p>
