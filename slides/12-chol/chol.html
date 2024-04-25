@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr. Hua Zhou @ UCLA">
-<meta name="dcterms.date" content="2024-04-18">
+<meta name="dcterms.date" content="2024-04-25">
 
 <title>Cholesky Decomposition</title>
 <style>
@@ -3257,7 +3257,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 18, 2024</p>
+      <p class="date">April 25, 2024</p>
     </div>
   </div>
   
@@ -3270,7 +3270,7 @@ window.Quarto = {
 
 
 <p>System information (for reproducibility):</p>
-<div id="cell-2" class="cell" data-tags="[]" data-execution_count="31">
+<div id="cell-2" class="cell" data-tags="[]" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Julia Version 1.10.2
@@ -3290,21 +3290,22 @@ Environment:
 </div>
 </div>
 <p>Load packages:</p>
-<div id="cell-4" class="cell" data-tags="[]" data-execution_count="32">
+<div id="cell-4" class="cell" data-tags="[]" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">activate</span>(<span class="fu">pwd</span>())</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">instantiate</span>()</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">status</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  Activating project at `~/Documents/github.com/ucla-biostat-257/2024spring/slides/12-chol`</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Status `~/Documents/github.com/ucla-biostat-257/2024spring/slides/12-chol/Project.toml`
   [6e4b80f9] BenchmarkTools v1.5.0
-  [31c24e10] Distributions v0.25.107
+⌃ [31c24e10] Distributions v0.25.107
   [37e2e46d] LinearAlgebra
-  [9a3f8284] Random</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  Activating project at `~/Documents/github.com/ucla-biostat-257/2024spring/slides/12-chol`</code></pre>
+  [9a3f8284] Random
+Info Packages marked with ⌃ have new versions available and may be upgradable.</code></pre>
 </div>
 </div>
 <section id="introduction" class="level2" data-number="1">
@@ -3359,6 +3360,44 @@ Now <span class="math inline">\(a_{11}&gt;0\)</span> (why?), so <span class="mat
 \]</span> plus <span class="math inline">\(n\)</span> square roots. Half the cost of LU decomposition by utilizing symmetry.</p></li>
 <li><p>In general Cholesky decomposition is very stable. Failure of the decomposition simply means <span class="math inline">\(\mathbf{A}\)</span> is not positive definite. It is an efficient way to test positive definiteness.</p></li>
 </ul>
+<div id="cell-7" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span>, <span class="bu">LinearAlgebra</span>, <span class="bu">Random</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">257</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">5000</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="fu">randn</span>(n, n)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> X<span class="op">&#39;</span>X <span class="op">+</span> I</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>Ac <span class="op">=</span> <span class="fu">similar</span>(A)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> <span class="fu">lu!</span>(<span class="op">$</span>Ac) <span class="fu">setup</span>(<span class="fu">copy!</span>(<span class="op">$</span>Ac, <span class="op">$</span>A)) evals<span class="op">=</span><span class="fl">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre>BenchmarkTools.Trial: 18 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">253.211 ms</span> … <span class="ansi-magenta-fg">301.063 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">254.439 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">260.272 ms</span> ± <span class="ansi-green-fg"> 12.852 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
+  █<span class="ansi-blue-fg">▆</span>       <span class="ansi-green-fg"> </span>                                                     
+  █<span class="ansi-blue-fg">█</span>▄▁▁▁▄▁▄<span class="ansi-green-fg">▄</span>▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▄▁▁▁▁▁▁▄▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▄ ▁
+  253 ms<span class="ansi-bright-black-fg">           Histogram: frequency by time</span>          301 ms <span class="ansi-bold">&lt;</span>
+ Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">39.17 KiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">2</span>.</pre>
+</div>
+</div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> <span class="fu">cholesky!</span>(<span class="fu">Symmetric</span>(<span class="op">$</span>Ac)) <span class="fu">setup</span>(<span class="fu">copy!</span>(<span class="op">$</span>Ac, <span class="op">$</span>A)) evals<span class="op">=</span><span class="fl">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre>BenchmarkTools.Trial: 31 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">151.168 ms</span> … <span class="ansi-magenta-fg">163.706 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">151.607 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">152.626 ms</span> ± <span class="ansi-green-fg">  2.796 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
+    <span class="ansi-blue-fg">█</span>    <span class="ansi-green-fg"> </span>                                                       
+  ██<span class="ansi-blue-fg">█</span>▃▃▄▁<span class="ansi-green-fg">▃</span>▁▁▁▁▁▁▁▁▁▁▁▁▁▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▄▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃ ▁
+  151 ms<span class="ansi-bright-black-fg">           Histogram: frequency by time</span>          164 ms <span class="ansi-bold">&lt;</span>
+ Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">0 bytes</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">0</span>.</pre>
+</div>
+</div>
+</div>
 </section>
 <section id="pivoting" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="pivoting"><span class="header-section-number">3</span> Pivoting</h2>
@@ -3378,10 +3417,10 @@ Now <span class="math inline">\(a_{11}&gt;0\)</span> (why?), so <span class="mat
 </ul>
 <section id="example-positive-definite-matrix" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="example-positive-definite-matrix"><span class="header-section-number">4.1</span> Example: positive definite matrix</h3>
-<div id="cell-10" class="cell" data-tags="[]" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">4.0</span> <span class="fl">12</span> <span class="op">-</span><span class="fl">16</span>; <span class="fl">12</span> <span class="fl">37</span> <span class="op">-</span><span class="fl">43</span>; <span class="op">-</span><span class="fl">16</span> <span class="op">-</span><span class="fl">43</span> <span class="fl">98</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-12" class="cell" data-tags="[]" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">4.0</span> <span class="fl">12</span> <span class="op">-</span><span class="fl">16</span>; <span class="fl">12</span> <span class="fl">37</span> <span class="op">-</span><span class="fl">43</span>; <span class="op">-</span><span class="fl">16</span> <span class="op">-</span><span class="fl">43</span> <span class="fl">98</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>3×3 Matrix{Float64}:
    4.0   12.0  -16.0
@@ -3389,9 +3428,9 @@ Now <span class="math inline">\(a_{11}&gt;0\)</span> (why?), so <span class="mat
  -16.0  -43.0   98.0</code></pre>
 </div>
 </div>
-<div id="cell-11" class="cell" data-tags="[]" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cholesky without pivoting</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Achol <span class="op">=</span> <span class="fu">cholesky</span>(<span class="fu">Symmetric</span>(A))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-13" class="cell" data-tags="[]" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cholesky without pivoting</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Achol <span class="op">=</span> <span class="fu">cholesky</span>(<span class="fu">Symmetric</span>(A))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>Cholesky{Float64, Matrix{Float64}}
 U factor:
@@ -3401,14 +3440,14 @@ U factor:
   ⋅    ⋅    3.0</code></pre>
 </div>
 </div>
-<div id="cell-12" class="cell" data-tags="[]" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(Achol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-14" class="cell" data-tags="[]" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(Achol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>Cholesky{Float64, Matrix{Float64}}</code></pre>
 </div>
 </div>
-<div id="cell-13" class="cell" data-tags="[]" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dump</span>(Achol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-15" class="cell" data-tags="[]" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dump</span>(Achol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cholesky{Float64, Matrix{Float64}}
   factors: Array{Float64}((3, 3)) [2.0 6.0 -8.0; 12.0 1.0 5.0; -16.0 -43.0 3.0]
@@ -3416,9 +3455,9 @@ U factor:
   info: Int64 0</code></pre>
 </div>
 </div>
-<div id="cell-14" class="cell" data-tags="[]" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve the lower triangular Cholesky factor</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Achol.L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-16" class="cell" data-tags="[]" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve the lower triangular Cholesky factor</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Achol.L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>3×3 LowerTriangular{Float64, Matrix{Float64}}:
   2.0   ⋅    ⋅ 
@@ -3426,9 +3465,9 @@ U factor:
  -8.0  5.0  3.0</code></pre>
 </div>
 </div>
-<div id="cell-15" class="cell" data-tags="[]" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve the upper triangular Cholesky factor</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Achol.U</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-17" class="cell" data-tags="[]" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve the upper triangular Cholesky factor</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Achol.U</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>3×3 UpperTriangular{Float64, Matrix{Float64}}:
  2.0  6.0  -8.0
@@ -3436,9 +3475,9 @@ U factor:
   ⋅    ⋅    3.0</code></pre>
 </div>
 </div>
-<div id="cell-16" class="cell" data-tags="[]" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">2.0</span>; <span class="fl">3.0</span>]</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">\</span> b <span class="co"># this does LU; wasteful!!!; 2/3 n^3 + 2n^2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-18" class="cell" data-tags="[]" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">2.0</span>; <span class="fl">3.0</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">\</span> b <span class="co"># this does LU; wasteful!!!; 2/3 n^3 + 2n^2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>3-element Vector{Float64}:
  28.583333333333304
@@ -3446,8 +3485,8 @@ U factor:
   1.3333333333333321</code></pre>
 </div>
 </div>
-<div id="cell-17" class="cell" data-tags="[]" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Achol <span class="op">\</span> b <span class="co"># two triangular solves; only 2n^2 flops</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-19" class="cell" data-tags="[]" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Achol <span class="op">\</span> b <span class="co"># two triangular solves; only 2n^2 flops</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>3-element Vector{Float64}:
  28.583333333333332
@@ -3455,20 +3494,20 @@ U factor:
   1.3333333333333333</code></pre>
 </div>
 </div>
-<div id="cell-18" class="cell" data-tags="[]" data-execution_count="41">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">det</span>(A) <span class="co"># this does LU; wasteful!!! (2/3) n^3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-20" class="cell" data-tags="[]" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">det</span>(A) <span class="co"># this does LU; wasteful!!! (2/3) n^3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>36.000000000000036</code></pre>
 </div>
 </div>
-<div id="cell-19" class="cell" data-tags="[]" data-execution_count="42">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">det</span>(Achol) <span class="co"># cheap</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-21" class="cell" data-tags="[]" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">det</span>(Achol) <span class="co"># cheap</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>36.0</code></pre>
 </div>
 </div>
-<div id="cell-20" class="cell" data-tags="[]" data-execution_count="43">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inv</span>(A) <span class="co"># this does LU! (2/3) n^3 + (4/3) n^3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-22" class="cell" data-tags="[]" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inv</span>(A) <span class="co"># this does LU! (2/3) n^3 + (4/3) n^3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>3×3 Matrix{Float64}:
   49.3611   -13.5556     2.11111
@@ -3476,8 +3515,8 @@ U factor:
    2.11111   -0.555556   0.111111</code></pre>
 </div>
 </div>
-<div id="cell-21" class="cell" data-tags="[]" data-execution_count="44">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inv</span>(Achol) <span class="co"># (4/3) n^3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-23" class="cell" data-tags="[]" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inv</span>(Achol) <span class="co"># (4/3) n^3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>3×3 Matrix{Float64}:
   49.3611   -13.5556     2.11111
@@ -3488,12 +3527,12 @@ U factor:
 </section>
 <section id="example-positive-semi-definite-matrix." class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="example-positive-semi-definite-matrix."><span class="header-section-number">4.2</span> Example: positive semi-definite matrix.</h3>
-<div id="cell-23" class="cell" data-tags="[]" data-execution_count="45">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">123</span>) <span class="co"># seed</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">randn</span>(<span class="fl">5</span>, <span class="fl">3</span>)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> A <span class="op">*</span> <span class="fu">transpose</span>(A) <span class="co"># A has rank 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-25" class="cell" data-tags="[]" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">123</span>) <span class="co"># seed</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">randn</span>(<span class="fl">5</span>, <span class="fl">3</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> A <span class="op">*</span> <span class="fu">transpose</span>(A) <span class="co"># A has rank 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>5×5 Matrix{Float64}:
   0.726688  -0.982622  -1.0597   -0.58302    0.41867
@@ -3503,14 +3542,14 @@ U factor:
   0.41867   -0.594176  -1.09925  -0.880852   0.607154</code></pre>
 </div>
 </div>
-<div id="cell-24" class="cell" data-tags="[]" data-execution_count="46">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>Achol <span class="op">=</span> <span class="fu">cholesky</span>(A, <span class="fu">Val</span>(<span class="cn">true</span>)) <span class="co"># 2nd argument requests pivoting</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-26" class="cell" data-tags="[]" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Achol <span class="op">=</span> <span class="fu">cholesky</span>(A, <span class="fu">Val</span>(<span class="cn">true</span>)) <span class="co"># 2nd argument requests pivoting</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>RankDeficientException: RankDeficientException(1)</code></pre>
 </div>
 </div>
-<div id="cell-25" class="cell" data-tags="[]" data-execution_count="47">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Achol <span class="op">=</span> <span class="fu">cholesky</span>(A, <span class="fu">Val</span>(<span class="cn">true</span>), check<span class="op">=</span><span class="cn">false</span>) <span class="co"># turn off checking pd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-27" class="cell" data-tags="[]" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Achol <span class="op">=</span> <span class="fu">cholesky</span>(A, <span class="fu">Val</span>(<span class="cn">true</span>), check<span class="op">=</span><span class="cn">false</span>) <span class="co"># turn off checking pd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}
 U factor with rank 4:
@@ -3529,20 +3568,20 @@ permutation:
  1</code></pre>
 </div>
 </div>
-<div id="cell-26" class="cell" data-tags="[]" data-execution_count="48">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(Achol) <span class="co"># determine rank from Cholesky factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-28" class="cell" data-tags="[]" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(Achol) <span class="co"># determine rank from Cholesky factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>4</code></pre>
 </div>
 </div>
-<div id="cell-27" class="cell" data-tags="[]" data-execution_count="49">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(A) <span class="co"># determine rank from SVD (default), which is more numerically stable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-29" class="cell" data-tags="[]" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(A) <span class="co"># determine rank from SVD (default), which is more numerically stable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>3</code></pre>
 </div>
 </div>
-<div id="cell-28" class="cell" data-tags="[]" data-execution_count="50">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>Achol.L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-30" class="cell" data-tags="[]" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>Achol.L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>5×5 LowerTriangular{Float64, Matrix{Float64}}:
   2.0192      ⋅           ⋅         ⋅            ⋅ 
@@ -3552,8 +3591,8 @@ permutation:
  -0.524812  -0.658539   -0.132617  1.58051e-8  -5.55112e-16</code></pre>
 </div>
 </div>
-<div id="cell-29" class="cell" data-tags="[]" data-execution_count="51">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>Achol.U</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-31" class="cell" data-tags="[]" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Achol.U</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>5×5 UpperTriangular{Float64, Matrix{Float64}}:
  2.0192  0.971191   0.973082   -0.544399    -0.524812
@@ -3563,8 +3602,8 @@ permutation:
   ⋅       ⋅          ⋅           ⋅          -5.55112e-16</code></pre>
 </div>
 </div>
-<div id="cell-30" class="cell" data-tags="[]" data-execution_count="52">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Achol.p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-32" class="cell" data-tags="[]" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>Achol.p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>5-element Vector{Int64}:
  3
@@ -3574,9 +3613,9 @@ permutation:
  1</code></pre>
 </div>
 </div>
-<div id="cell-31" class="cell" data-tags="[]" data-execution_count="53">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P A P&#39; = L U</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>A[Achol.p, Achol.p] <span class="op">≈</span> Achol.L <span class="op">*</span> Achol.U</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-33" class="cell" data-tags="[]" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P A P&#39; = L U</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>A[Achol.p, Achol.p] <span class="op">≈</span> Achol.L <span class="op">*</span> Achol.U</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>true</code></pre>
 </div>
@@ -3598,92 +3637,92 @@ permutation:
 <li><p><strong>Method 2</strong>: (a) Cholesky decomposition <span class="math inline">\(\Sigma = \mathbf{L} \mathbf{L}^T\)</span> (<span class="math inline">\(n^3/3\)</span> flops), (b) Solve <span class="math inline">\(\mathbf{L} \mathbf{x} = \mathbf{y}\)</span> by forward substitutions (<span class="math inline">\(n^2\)</span> flops), (c) compute quadratic form <span class="math inline">\(\mathbf{x}^T \mathbf{x}\)</span> (<span class="math inline">\(2n\)</span> flops), and (d) compute determinant from Cholesky factor (<span class="math inline">\(n\)</span> flops).</p></li>
 </ul>
 <p><strong>Which method is better?</strong></p>
-<div id="cell-34" class="cell" data-tags="[]" data-execution_count="54">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is a person w/o numerical analysis training</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">logpdf_mvn_1</span>(y<span class="op">::</span><span class="dt">Vector</span>, Σ<span class="op">::</span><span class="dt">Matrix</span>)</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(y)</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span> (n<span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">log</span>(<span class="fl">2</span>π) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">logdet</span>(<span class="fu">Symmetric</span>(Σ)) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">transpose</span>(y) <span class="op">*</span> <span class="fu">inv</span>(Σ) <span class="op">*</span> y</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co"># this is a computing-savvy person </span></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">logpdf_mvn_2</span>(y<span class="op">::</span><span class="dt">Vector</span>, Σ<span class="op">::</span><span class="dt">Matrix</span>)</span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(y)</span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>    Σchol <span class="op">=</span> <span class="fu">cholesky</span>(<span class="fu">Symmetric</span>(Σ))</span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span> (n<span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">log</span>(<span class="fl">2</span>π) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">logdet</span>(Σchol) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">abs2</span>(<span class="fu">norm</span>(Σchol.L <span class="op">\</span> y))</span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="co"># better memory efficiency - input Σ is overwritten</span></span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">logpdf_mvn_3</span>(y<span class="op">::</span><span class="dt">Vector</span>, Σ<span class="op">::</span><span class="dt">Matrix</span>)</span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(y)</span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>    Σchol <span class="op">=</span> <span class="fu">cholesky!</span>(<span class="fu">Symmetric</span>(Σ)) <span class="co"># Σ is overwritten</span></span>
-<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span> (n<span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">log</span>(<span class="fl">2</span>π) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">logdet</span>(Σchol) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">dot</span>(y, Σchol <span class="op">\</span> y)</span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-36" class="cell" data-tags="[]" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is a person w/o numerical analysis training</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">logpdf_mvn_1</span>(y<span class="op">::</span><span class="dt">Vector</span>, Σ<span class="op">::</span><span class="dt">Matrix</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(y)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span> (n<span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">log</span>(<span class="fl">2</span>π) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">logdet</span>(<span class="fu">Symmetric</span>(Σ)) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">transpose</span>(y) <span class="op">*</span> <span class="fu">inv</span>(Σ) <span class="op">*</span> y</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="co"># this is a computing-savvy person </span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">logpdf_mvn_2</span>(y<span class="op">::</span><span class="dt">Vector</span>, Σ<span class="op">::</span><span class="dt">Matrix</span>)</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(y)</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    Σchol <span class="op">=</span> <span class="fu">cholesky</span>(<span class="fu">Symmetric</span>(Σ))</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span> (n<span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">log</span>(<span class="fl">2</span>π) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">logdet</span>(Σchol) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">abs2</span>(<span class="fu">norm</span>(Σchol.L <span class="op">\</span> y))</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="co"># better memory efficiency - input Σ is overwritten</span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">logpdf_mvn_3</span>(y<span class="op">::</span><span class="dt">Vector</span>, Σ<span class="op">::</span><span class="dt">Matrix</span>)</span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(y)</span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>    Σchol <span class="op">=</span> <span class="fu">cholesky!</span>(<span class="fu">Symmetric</span>(Σ)) <span class="co"># Σ is overwritten</span></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span> (n<span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">log</span>(<span class="fl">2</span>π) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">logdet</span>(Σchol) <span class="op">-</span> (<span class="fl">1</span><span class="op">//</span><span class="fl">2</span>) <span class="op">*</span> <span class="fu">dot</span>(y, Σchol <span class="op">\</span> y)</span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>logpdf_mvn_3 (generic function with 1 method)</code></pre>
 </div>
 </div>
-<div id="cell-35" class="cell" data-tags="[]" data-execution_count="55">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span>, <span class="bu">Distributions</span>, <span class="bu">Random</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">257</span>) <span class="co"># seed</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">1000</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co"># a pd matrix</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>Σ <span class="op">=</span> <span class="fu">convert</span>(<span class="dt">Matrix</span>{<span class="dt">Float64</span>}, <span class="fu">Symmetric</span>([i <span class="op">*</span> (n <span class="op">-</span> j <span class="op">+</span> <span class="fl">1</span>) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n, j <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n]))</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fu">rand</span>(<span class="fu">MvNormal</span>(Σ)) <span class="co"># one random sample from N(0, Σ)</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="co"># at least they should give the same answer</span></span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">logpdf_mvn_1</span>(y, Σ)</span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">logpdf_mvn_2</span>(y, Σ)</span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>Σc <span class="op">=</span> <span class="fu">copy</span>(Σ)</span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">logpdf_mvn_3</span>(y, Σc);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-37" class="cell" data-tags="[]" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span>, <span class="bu">Distributions</span>, <span class="bu">Random</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">257</span>) <span class="co"># seed</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">1000</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co"># a pd matrix</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>Σ <span class="op">=</span> <span class="fu">convert</span>(<span class="dt">Matrix</span>{<span class="dt">Float64</span>}, <span class="fu">Symmetric</span>([i <span class="op">*</span> (n <span class="op">-</span> j <span class="op">+</span> <span class="fl">1</span>) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n, j <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n]))</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fu">rand</span>(<span class="fu">MvNormal</span>(Σ)) <span class="co"># one random sample from N(0, Σ)</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="co"># at least they should give the same answer</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">logpdf_mvn_1</span>(y, Σ)</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">logpdf_mvn_2</span>(y, Σ)</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>Σc <span class="op">=</span> <span class="fu">copy</span>(Σ)</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">logpdf_mvn_3</span>(y, Σc);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>logpdf_mvn_1(y, Σ) = -4873.326849713733
 logpdf_mvn_2(y, Σ) = -4873.326849713766
 logpdf_mvn_3(y, Σc) = -4873.326849713767</code></pre>
 </div>
 </div>
-<div id="cell-36" class="cell" data-tags="[]" data-execution_count="56">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> <span class="fu">logpdf_mvn_1</span>(<span class="op">$</span>y, <span class="op">$</span>Σ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-38" class="cell" data-tags="[]" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> <span class="fu">logpdf_mvn_1</span>(<span class="op">$</span>y, <span class="op">$</span>Σ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre>BenchmarkTools.Trial: 343 samples with 1 evaluation.
- Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">13.112 ms</span> … <span class="ansi-magenta-fg">32.815 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 3.35%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">13.716 ms              </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">14.612 ms</span> ± <span class="ansi-green-fg"> 2.393 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>2.59% ± 3.77%
-   ▅█<span class="ansi-blue-fg">▄</span>  ▂<span class="ansi-green-fg">▄</span>▄                                                    
-  ▄██<span class="ansi-blue-fg">█</span>▅▁█<span class="ansi-green-fg">█</span>██▇▄▅▅▁▄▁▁▄▁▁▁▄▄▁▁▅▁▁▅▅▁▅▄▁▄▁▄▁▅▄▁▅▅▄▁▁▄▁▄▁▁▁▁▁▁▁▁▄ ▆
-  13.1 ms<span class="ansi-bright-black-fg">      </span><span class="ansi-bright-black-fg">Histogram: </span><span class="ansi-bright-black-fg ansi-bold">log(</span><span class="ansi-bright-black-fg">frequency</span><span class="ansi-bright-black-fg ansi-bold">)</span><span class="ansi-bright-black-fg"> by time</span>      25.4 ms <span class="ansi-bold">&lt;</span>
+<pre>BenchmarkTools.Trial: 292 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">15.479 ms</span> … <span class="ansi-magenta-fg">65.010 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">16.252 ms              </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">17.128 ms</span> ± <span class="ansi-green-fg"> 4.496 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>2.15% ± 7.45%
+   █<span class="ansi-blue-fg">▆</span> <span class="ansi-green-fg"> </span>                                                        
+  ▇█<span class="ansi-blue-fg">█</span>█<span class="ansi-green-fg">▄</span>▁▄▅▁▁▄▁▄▁▁▁▁▄▁▄▁▄▁▁▁▁▁▁▁▁▁▁▁▁▁▄▁▁▁▁▁▄▄▁▁▄▁▄▁▁▁▁▁▁▁▁▁▁▄ ▅
+  15.5 ms<span class="ansi-bright-black-fg">      </span><span class="ansi-bright-black-fg">Histogram: </span><span class="ansi-bright-black-fg ansi-bold">log(</span><span class="ansi-bright-black-fg">frequency</span><span class="ansi-bright-black-fg ansi-bold">)</span><span class="ansi-bright-black-fg"> by time</span>      39.7 ms <span class="ansi-bold">&lt;</span>
  Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">15.77 MiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">9</span>.</pre>
 </div>
 </div>
 </div>
-<div id="cell-37" class="cell" data-tags="[]" data-execution_count="57">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> <span class="fu">logpdf_mvn_2</span>(<span class="op">$</span>y, <span class="op">$</span>Σ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-39" class="cell" data-tags="[]" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> <span class="fu">logpdf_mvn_2</span>(<span class="op">$</span>y, <span class="op">$</span>Σ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre>BenchmarkTools.Trial: 1118 samples with 1 evaluation.
- Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">3.741 ms</span> … <span class="ansi-magenta-fg">  7.810 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 11.94%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">4.203 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">4.472 ms</span> ± <span class="ansi-green-fg">503.995 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>6.01% ±  8.12%
-          ▆█▇<span class="ansi-blue-fg">▂</span>     <span class="ansi-green-fg"> </span>                                           
-  ▂▃▂▂▂▁▂▃███<span class="ansi-blue-fg">█</span>▆▄▃▂▂<span class="ansi-green-fg">▂</span>▂▁▁▂▁▁▁▂▃▄▅▆▄▄▄▃▄▄▄▃▃▃▂▁▂▂▂▁▁▁▂▂▁▁▁▁▁▂▁▁▂ ▃
-  3.74 ms<span class="ansi-bright-black-fg">         Histogram: frequency by time</span>        6.22 ms <span class="ansi-bold">&lt;</span>
+<pre>BenchmarkTools.Trial: 513 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">8.744 ms</span> … <span class="ansi-magenta-fg">28.857 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 66.37%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">9.375 ms              </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">9.761 ms</span> ± <span class="ansi-green-fg"> 2.302 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>3.15% ±  8.56%
+    <span class="ansi-blue-fg">█</span>▁<span class="ansi-green-fg"> </span>                                                       
+  ▆█<span class="ansi-blue-fg">█</span>█<span class="ansi-green-fg">▆</span>▅▁▄▁▅▁▁▁▁▁▁▁▁▁▁▄▁▁▁▁▁▄▁▁▁▁▁▁▁▁▄▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▅▅ ▆
+  8.74 ms<span class="ansi-bright-black-fg">      </span><span class="ansi-bright-black-fg">Histogram: </span><span class="ansi-bright-black-fg ansi-bold">log(</span><span class="ansi-bright-black-fg">frequency</span><span class="ansi-bright-black-fg ansi-bold">)</span><span class="ansi-bright-black-fg"> by time</span>     24.5 ms <span class="ansi-bold">&lt;</span>
  Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">15.27 MiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">6</span>.</pre>
 </div>
 </div>
 </div>
-<div id="cell-38" class="cell" data-tags="[]" data-execution_count="58">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> <span class="fu">logpdf_mvn_3</span>(<span class="op">$</span>y, <span class="op">$</span>Σc) setup<span class="op">=</span>(<span class="fu">copy!</span>(Σc, Σ)) evals<span class="op">=</span><span class="fl">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-40" class="cell" data-tags="[]" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> <span class="fu">logpdf_mvn_3</span>(<span class="op">$</span>y, <span class="op">$</span>Σc) setup<span class="op">=</span>(<span class="fu">copy!</span>(Σc, Σ)) evals<span class="op">=</span><span class="fl">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre>BenchmarkTools.Trial: 2187 samples with 1 evaluation.
- Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">2.005 ms</span> … <span class="ansi-magenta-fg"> 33.762 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">2.036 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
- Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">2.141 ms</span> ± <span class="ansi-green-fg">928.284 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
-  █<span class="ansi-blue-fg">▇</span>▁ <span class="ansi-green-fg"> </span>                                                        
-  █<span class="ansi-blue-fg">█</span>█▇<span class="ansi-green-fg">▄</span>▅▃▄▃▄▁▄▃▅▃▃▄▃▅▁▁▅▄▁▃▃▁▁▁▃▃▃▁▁▃▁▁▅▁▁▁▁▁▁▁▄▁▄▄▁▁▄▅▅▃▅▅▄▄ █
-  2.01 ms<span class="ansi-bright-black-fg">      </span><span class="ansi-bright-black-fg">Histogram: </span><span class="ansi-bright-black-fg ansi-bold">log(</span><span class="ansi-bright-black-fg">frequency</span><span class="ansi-bright-black-fg ansi-bold">)</span><span class="ansi-bright-black-fg"> by time</span>      4.27 ms <span class="ansi-bold">&lt;</span>
+<pre>BenchmarkTools.Trial: 685 samples with 1 evaluation.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">7.069 ms</span> … <span class="ansi-magenta-fg"> 13.593 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">7.110 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">7.137 ms</span> ± <span class="ansi-green-fg">280.884 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
+     ▁▃▅▆█▅<span class="ansi-blue-fg">▆</span>▃▃ ▂  <span class="ansi-green-fg"> </span>                                            
+  ▄▅▇██████<span class="ansi-blue-fg">█</span>████▅▆<span class="ansi-green-fg">▅</span>▄▄▃▃▄▄▃▃▃▄▂▃▃▂▃▃▃▃▃▁▂▂▂▂▂▂▂▂▂▂▁▂▁▁▁▁▂▁▁▁▁▂ ▃
+  7.07 ms<span class="ansi-bright-black-fg">         Histogram: frequency by time</span>        7.33 ms <span class="ansi-bold">&lt;</span>
  Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">8.00 KiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">1</span>.</pre>
 </div>
 </div>
