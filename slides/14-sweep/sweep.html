@@ -3267,7 +3267,7 @@ window.Quarto = {
 
 
 <p>System information (for reproducibility):</p>
-<div id="cell-2" class="cell" data-tags="[]" data-execution_count="2">
+<div id="cell-2" class="cell" data-tags="[]" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Julia Version 1.10.2
@@ -3287,7 +3287,7 @@ Environment:
 </div>
 </div>
 <p>Load packages:</p>
-<div id="cell-4" class="cell" data-tags="[]" data-execution_count="3">
+<div id="cell-4" class="cell" data-tags="[]" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">activate</span>(<span class="fu">pwd</span>())</span>
@@ -3339,7 +3339,7 @@ Environment:
   \mathbf{A}_{21} \mathbf{A}_{11}^{-1} &amp; \mathbf{A}_{22} - \mathbf{A}_{21} \mathbf{A}_{11}^{-1} \mathbf{A}_{12}
   \end{pmatrix}.
 \]</span><br>
-Order dose <strong>not</strong> matter. The block <span class="math inline">\(\mathbf{A}_{22} - \mathbf{A}_{21} \mathbf{A}_{11}^{-1} \mathbf{A}_{12}\)</span> is recognized as the <strong>Schur complement</strong> of <span class="math inline">\(\mathbf{A}_{11}\)</span>.</p></li>
+Order does <strong>not</strong> matter. The block <span class="math inline">\(\mathbf{A}_{22} - \mathbf{A}_{21} \mathbf{A}_{11}^{-1} \mathbf{A}_{12}\)</span> is recognized as the <strong>Schur complement</strong> of <span class="math inline">\(\mathbf{A}_{11}\)</span>.</p></li>
 <li><p>Pd and determinant: <span class="math inline">\(\mathbf{A}\)</span> is pd if and only if each diagonal entry can be swept in succession and is positive until it is swept. When a diagonal entry of a pd matrix <span class="math inline">\(\mathbf{A}\)</span> is swept, it becomes negative and remains negative thereafter. Taking the product of diagonal entries just before each is swept yields the determinant of <span class="math inline">\(\mathbf{A}\)</span>.</p></li>
 </ul>
 </section>
@@ -3387,7 +3387,7 @@ In total <span class="math inline">\(np^2 + p^3\)</span> flops.</p>
 <ul>
 <li><a href="https://github.com/joshday/SweepOperator.jl">SweepOperator.jl</a> package (by Josh Day) implements the sweep operator.</li>
 </ul>
-<div id="cell-13" class="cell" data-tags="[]" data-execution_count="4">
+<div id="cell-13" class="cell" data-tags="[]" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SweepOperator</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">9</span>. <span class="fl">2</span> <span class="op">-</span><span class="fl">2</span>; <span class="fl">2</span> <span class="fl">1</span> <span class="fl">0</span>; <span class="op">-</span><span class="fl">2</span> <span class="fl">0</span> <span class="fl">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3398,7 +3398,7 @@ In total <span class="math inline">\(np^2 + p^3\)</span> flops.</p>
  -2.0  0.0   4.0</code></pre>
 </div>
 </div>
-<div id="cell-14" class="cell" data-tags="[]" data-execution_count="5">
+<div id="cell-14" class="cell" data-tags="[]" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">copy</span>(A)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sweep!</span>(B, <span class="fl">1</span>) <span class="co"># sweep (1, 1) entry</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -3408,7 +3408,7 @@ In total <span class="math inline">\(np^2 + p^3\)</span> flops.</p>
  -2.0       0.0        3.55556</code></pre>
 </div>
 </div>
-<div id="cell-15" class="cell" data-tags="[]" data-execution_count="6">
+<div id="cell-15" class="cell" data-tags="[]" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sweep!</span>(B, <span class="fl">2</span>) <span class="co"># sweep (2, 2) entry</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>3×3 Matrix{Float64}:
@@ -3417,7 +3417,7 @@ In total <span class="math inline">\(np^2 + p^3\)</span> flops.</p>
  -2.0   0.0   3.2</code></pre>
 </div>
 </div>
-<div id="cell-16" class="cell" data-tags="[]" data-execution_count="7">
+<div id="cell-16" class="cell" data-tags="[]" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sweep!</span>(B, <span class="fl">3</span>) <span class="co"># sweep (3, 3) entry, we are left with -inv(B)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>3×3 Matrix{Float64}:
@@ -3426,7 +3426,7 @@ In total <span class="math inline">\(np^2 + p^3\)</span> flops.</p>
  -2.0    0.0  -0.3125</code></pre>
 </div>
 </div>
-<div id="cell-17" class="cell" data-tags="[]" data-execution_count="8">
+<div id="cell-17" class="cell" data-tags="[]" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check correctness</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inv</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -3436,7 +3436,7 @@ In total <span class="math inline">\(np^2 + p^3\)</span> flops.</p>
   0.125  -0.25   0.3125</code></pre>
 </div>
 </div>
-<div id="cell-18" class="cell" data-tags="[]" data-execution_count="9">
+<div id="cell-18" class="cell" data-tags="[]" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># sweep! function only changes the upper triangular part</span></span>
@@ -3445,7 +3445,7 @@ In total <span class="math inline">\(np^2 + p^3\)</span> flops.</p>
 <pre><code>true</code></pre>
 </div>
 </div>
-<div id="cell-19" class="cell" data-tags="[]" data-execution_count="10">
+<div id="cell-19" class="cell" data-tags="[]" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inverse sweep to bring negative inverse back to original matrix</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sweep!</span>(B, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="cn">true</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
