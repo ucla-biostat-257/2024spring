@@ -1,0 +1,11 @@
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+CodecZlib = "944b1d66-785c-5afd-91f1-9de20f533193"
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+KrylovKit = "0b1a1467-8014-51b9-945f-bf0ae24f4b77"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+LoopVectorization = "bdcacae8-1622-11e9-2a5c-532679323890"
+MatrixDepot = "b51810bb-c9f3-55da-ae3c-350fc1fbce05"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
