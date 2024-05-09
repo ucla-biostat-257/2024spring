@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Student Name and UID">
-<meta name="dcterms.date" content="2024-05-04">
+<meta name="dcterms.date" content="2024-05-08">
 
 <title>Biostat/Biomath M257 Homework 4</title>
 <style>
@@ -3256,7 +3256,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 4, 2024</p>
+      <p class="date">May 8, 2024</p>
     </div>
   </div>
   
@@ -3411,7 +3411,7 @@ window.Quarto = {
 <div id="cell-17" class="cell" data-tags="[]">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CodecZlib</span>, <span class="bu">DelimitedFiles</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">isfile</span>(<span class="st">&quot;pgrksol.csv.gz&quot;</span>) <span class="op">||</span> <span class="fu">download</span>(<span class="st">&quot;https://raw.githubusercontent.com/ucla-biostat-257/2024spring/master/hw/hw4/pgrksol.csv.gz&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">isfile</span>(<span class="st">&quot;pgrksol.csv.gz&quot;</span>) <span class="op">||</span> <span class="fu">download</span>(<span class="st">&quot;https://github.com/ucla-biostat-257/2024spring/raw/master/hw/hw4/pgrksol.csv.gz&quot;</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>xsol <span class="op">=</span> <span class="fu">open</span>(<span class="st">&quot;pgrksol.csv.gz&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="cf">do</span> io</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vec</span>(<span class="fu">readdlm</span>(<span class="fu">GzipDecompressorStream</span>(io)))</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
