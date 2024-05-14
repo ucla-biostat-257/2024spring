@@ -1,6 +1,7 @@
 [deps]
 COSMO = "1e616198-aa4e-51ec-90a2-23f7fbd31d8d"
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+Clarabel = "61c947e1-3e6d-4ee4-985a-eec8c727bd6e"
 Convex = "f65535da-76fb-5f13-bab9-19810c17039a"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
