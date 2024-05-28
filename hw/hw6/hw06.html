@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Student Name (UID)">
-<meta name="dcterms.date" content="2024-05-25">
+<meta name="dcterms.date" content="2024-05-28">
 
 <title>Biostat/Biomath M257 Homework 6</title>
 <style>
@@ -3248,7 +3248,7 @@ window.Quarto = {
   <li><a href="#mixedmodels.jl" id="toc-mixedmodels.jl" class="nav-link" data-scroll-target="#mixedmodels.jl"><span class="header-section-number">9.3</span> MixedModels.jl</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.4</span> Summary</a></li>
   </ul></li>
-  <li><a href="#q9.-be-proud-of-yourself" id="toc-q9.-be-proud-of-yourself" class="nav-link" data-scroll-target="#q9.-be-proud-of-yourself"><span class="header-section-number">10</span> Q9. Be proud of yourself</a></li>
+  <li><a href="#q10.-be-proud-of-yourself" id="toc-q10.-be-proud-of-yourself" class="nav-link" data-scroll-target="#q10.-be-proud-of-yourself"><span class="header-section-number">10</span> Q10. Be proud of yourself</a></li>
   </ul>
 </nav>
 </div>
@@ -3276,7 +3276,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 25, 2024</p>
+      <p class="date">May 28, 2024</p>
     </div>
   </div>
   
@@ -3696,7 +3696,7 @@ window.Quarto = {
 </section>
 <section id="q5.-30-pts-starting-point" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="q5.-30-pts-starting-point"><span class="header-section-number">5</span> Q5. (30 pts) Starting point</h2>
-<p>For numerical optimization, a good starting point is critical. Let’s start <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\sigma^2\)</span> from the least sqaures solutions (ignoring intra-individual correlations) <span class="math display">\[\begin{eqnarray*}
+<p>For numerical optimization, a good starting point is critical. Let’s start <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\sigma^2\)</span> from the least squares solutions (ignoring intra-individual correlations) <span class="math display">\[\begin{eqnarray*}
 \boldsymbol{\beta}^{(0)} &amp;=&amp; \left(\sum_i \mathbf{X}_i^T \mathbf{X}_i\right)^{-1} \left(\sum_i \mathbf{X}_i^T \mathbf{y}_i\right) \\
 \sigma^{2(0)} &amp;=&amp; \frac{\sum_i \|\mathbf{r}_i^{(0)}\|_2^2}{\sum_i n_i} = \frac{\sum_i \|\mathbf{y}_i - \mathbf{X}_i \boldsymbol{\beta}^{(0)}\|_2^2}{\sum_i n_i}.
 \end{eqnarray*}\]</span> To get a reasonable starting point for <span class="math inline">\(\boldsymbol{\Sigma} = \mathbf{L} \mathbf{L}^T\)</span>, we can minimize the least squares criterion (ignoring the noise variance component) <span class="math display">\[
@@ -4138,7 +4138,7 @@ window.Quarto = {
 <section id="mixedmodels.jl" class="level3" data-number="9.3">
 <h3 data-number="9.3" class="anchored" data-anchor-id="mixedmodels.jl"><span class="header-section-number">9.3</span> MixedModels.jl</h3>
 <div id="cell-66" class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>testdata <span class="op">=</span> CSV.<span class="fu">File</span>(<span class="st">&quot;lmm_data.csv&quot;</span>, types <span class="op">=</span> <span class="fu">Dict</span>(<span class="fl">1</span><span class="op">=&gt;</span><span class="dt">String</span>)) <span class="op">|&gt;</span> DataFrame!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>testdata <span class="op">=</span> CSV.<span class="fu">File</span>(<span class="st">&quot;lmm_data.csv&quot;</span>, types <span class="op">=</span> <span class="fu">Dict</span>(<span class="fl">1</span><span class="op">=&gt;</span><span class="dt">String</span>)) <span class="op">|&gt;</span> DataFrame</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-67" class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>mj <span class="op">=</span> <span class="fu">fit</span>(MixedModel, <span class="pp">@formula</span>(Y <span class="op">~</span> X1 <span class="op">+</span> X2 <span class="op">+</span> X3 <span class="op">+</span> X4 <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> Z1 <span class="op">+</span> Z2 <span class="op">|</span> ID)), testdata)</span>
@@ -4162,8 +4162,8 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="q9.-be-proud-of-yourself" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="q9.-be-proud-of-yourself"><span class="header-section-number">10</span> Q9. Be proud of yourself</h2>
+<section id="q10.-be-proud-of-yourself" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="q10.-be-proud-of-yourself"><span class="header-section-number">10</span> Q10. Be proud of yourself</h2>
 <p>Go to your resume/cv and claim you have experience performing analysis on complex longitudinal data sets with millions of records. And you beat current software by XXX fold.</p>
 </section>
 
