@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Student Name (UID)">
-<meta name="dcterms.date" content="2024-05-25">
+<meta name="dcterms.date" content="2024-06-11">
 
 <title>Biostat/Biomath M257 Homework 7</title>
 <style>
@@ -3266,7 +3266,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 25, 2024</p>
+      <p class="date">June 11, 2024</p>
     </div>
   </div>
   
@@ -3300,11 +3300,11 @@ window.Quarto = {
 - <span class="math inline">\(\boldsymbol{\beta} \in \mathbb{R}^p\)</span> are fixed effects, and<br>
 - <span class="math inline">\(\boldsymbol{\gamma}_i \in \mathbb{R}^q\)</span> are random effects assumed to be <span class="math inline">\(N(\mathbf{0}_q, \boldsymbol{\Sigma}_{q \times q}\)</span>) independent of <span class="math inline">\(\boldsymbol{\epsilon}_i\)</span>.</p>
 <p>The log-likelihood of the <span class="math inline">\(i\)</span>-th datum <span class="math inline">\((\mathbf{y}_i, \mathbf{X}_i, \mathbf{Z}_i)\)</span> is <span class="math display">\[
-    \ell_i(\boldsymbol{\beta}, \mathbf{L}, \sigma_0^2) = - \frac{n_i}{2} \log (2\pi) - \frac{1}{2} \log \det \boldsymbol{\Omega}_i - \frac{1}{2} (\mathbf{y} - \mathbf{X}_i \boldsymbol{\beta})^T \boldsymbol{\Omega}_i^{-1} (\mathbf{y} - \mathbf{X}_i \boldsymbol{\beta}),
+    \ell_i(\boldsymbol{\beta}, \mathbf{L}, \sigma^2) = - \frac{n_i}{2} \log (2\pi) - \frac{1}{2} \log \det \boldsymbol{\Omega}_i - \frac{1}{2} (\mathbf{y} - \mathbf{X}_i \boldsymbol{\beta})^T \boldsymbol{\Omega}_i^{-1} (\mathbf{y} - \mathbf{X}_i \boldsymbol{\beta}),
 \]</span> where <span class="math display">\[
     \boldsymbol{\Omega}_i = \sigma^2 \mathbf{I}_{n_i} + \mathbf{Z}_i \boldsymbol{\Sigma} \mathbf{Z}_i^T.
 \]</span> Given <span class="math inline">\(m\)</span> independent data points <span class="math inline">\((\mathbf{y}_i, \mathbf{X}_i, \mathbf{Z}_i)\)</span>, <span class="math inline">\(i=1,\ldots,m\)</span>, we seek the maximum likelihood estimate (MLE) by maximizing the log-likelihood <span class="math display">\[
-\ell(\boldsymbol{\beta}, \boldsymbol{\Sigma}, \sigma_0^2) = \sum_{i=1}^m \ell_i(\boldsymbol{\beta}, \boldsymbol{\Sigma}, \sigma_0^2).
+\ell(\boldsymbol{\beta}, \boldsymbol{\Sigma}, \sigma^2) = \sum_{i=1}^m \ell_i(\boldsymbol{\beta}, \boldsymbol{\Sigma}, \sigma^2).
 \]</span></p>
 <p>In HW6, we used the nonlinear programming (NLP) approach (Newton type algorithms) for optimization. In this assignment, we derive and implement an expectation-maximization (EM) algorithm for the same problem.</p>
 <div id="cell-6" class="cell" data-tags="[]">
@@ -3801,7 +3801,7 @@ Q(\boldsymbol{\beta}, \boldsymbol{\Sigma}, \sigma^2 \mid \boldsymbol{\beta}^{(t)
 <span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print obj</span></span>
 <span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        prtfreq <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;&amp;</span> <span class="fu">rem</span>(iter, prtfreq) <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;&amp;</span> <span class="fu">println</span>(<span class="st">&quot;iter=</span><span class="sc">$</span>iter<span class="st">, obj=</span><span class="sc">$</span>obj<span class="st">&quot;</span>)</span>
 <span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># check monotonicity</span></span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>        obj <span class="op">&lt;</span> obj_old <span class="op">&amp;&amp;</span> (<span class="pp">@warn</span> <span class="st">&quot;monotoniciy violated&quot;</span>)</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>        obj <span class="op">&lt;</span> obj_old <span class="op">&amp;&amp;</span> (<span class="pp">@warn</span> <span class="st">&quot;monotonicity violated&quot;</span>)</span>
 <span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># check convergence criterion</span></span>
 <span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>        (obj <span class="op">-</span> obj_old) <span class="op">&lt;</span> ftolrel <span class="op">*</span> (<span class="fu">abs</span>(obj_old) <span class="op">+</span> <span class="fl">1</span>) <span class="op">&amp;&amp;</span> <span class="cf">break</span></span>
 <span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># warning about non-convergence</span></span>
